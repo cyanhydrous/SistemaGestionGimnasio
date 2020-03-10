@@ -28,9 +28,10 @@ CREATE TABLE `membresia` (
   `fecha_fin` date DEFAULT NULL,
   `idcliente` int(11) NOT NULL,
   PRIMARY KEY (`idmembresia`),
+  UNIQUE KEY `idcliente_UNIQUE` (`idcliente`),
   KEY `fk_membresia_cliente_idx` (`idcliente`),
   CONSTRAINT `fk_membresia_cliente` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -42,4 +43,4 @@ CREATE TABLE `membresia` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-10 13:54:00
+-- Dump completed on 2020-03-10 14:24:51

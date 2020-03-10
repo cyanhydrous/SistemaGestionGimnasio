@@ -49,12 +49,34 @@ public class DAOMembresias implements IDAO {
 
     @Override
     public boolean actualizar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+        ModeloMembresia mm = (ModeloMembresia) obj;
+        
+        String query = "UPDATE membresia SET fecha_inicial=\'"+ mm.getFechaIn().toString() + "\',fecha_fin=\'"+ mm.getFechaFin().toString()+ "\' WHERE idcliente=" + mm.getCliente().getId()+";";
+        System.out.println(query);
+        try {
+            Statement s = conn.createStatement();
+            s.execute(query);
+            conn.close();
+            return true; //Redundante? execute devuelve boolean
+            //Nope, hay que cerrar la conexion(?
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean buscar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List lista = getAll();
+
+        for (Object mem : lista) {
+            if (mem.toString().equals(obj.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

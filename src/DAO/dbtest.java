@@ -31,23 +31,26 @@ public class dbtest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//
-//            ModeloCliente mc = new ModeloCliente(1,"Boshua","545454","Sukasa");
-//            LocalDate ld = LocalDate.parse("2020-05-10");
-//            LocalDate s = LocalDate.now();
-//            System.out.println(ld.toString());
-//            System.out.println(s.toString());
-//            ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
-//            DAOMembresias dm = new DAOMembresias();
-//
-//            dm.agregar(mm);
-//            
-//        List l = dm.getAll();
-//
-//        for (Object l1 : l) {
-//            ModeloMembresia m = (ModeloMembresia) l1;
-//            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
-//        }
+
+            ModeloCliente mc = new ModeloCliente(399755,"Bulio Iván","444","ffffff");
+            LocalDate ld = LocalDate.parse("2020-05-10");
+            LocalDate s = LocalDate.now();
+            ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
+            DAOMembresias dm = new DAOMembresias();
+
+            dm.agregar(mm);
+            
+            ld = LocalDate.parse("2020-06-10");
+            
+            
+            dm.actualizar(mm);
+            
+        List l = dm.getAll();
+
+        for (Object l1 : l) {
+            ModeloMembresia m = (ModeloMembresia) l1;
+            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
+        }
 
     }
 
