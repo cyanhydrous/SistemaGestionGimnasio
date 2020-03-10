@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * @author phant
  */
 public class DAOClientes implements IDAO {
-
+ boolean testing = true;
     @Override
     public boolean agregar(Object obj) {
         ConexionMySQL c = new ConexionMySQL();
@@ -31,9 +31,13 @@ public class DAOClientes implements IDAO {
         
 
         do{
-            id = generateUniqueId();
-            
-            if(control == Integer.MAX_VALUE) break;
+            id = generateUniqueId();            
+            if(control == Integer.MAX_VALUE){
+                if(testing){
+                System.out.println("Se acabaron los IDs disponibles, favor de cambiarlo.");
+                }
+                break;            
+            }
             
             control++;
         }while(buscarID(Integer.toString(id)));
@@ -43,6 +47,7 @@ public class DAOClientes implements IDAO {
         try {
             Statement s = conn.createStatement();
             s.execute(query);
+            conn.close();
             return true;
         } catch (SQLException e) {
             System.out.println(e);
@@ -63,16 +68,18 @@ public class DAOClientes implements IDAO {
         ModeloCliente cte = (ModeloCliente) obj;
         int id = cte.getId();
         
-        String query = "UPDATE cliente SET nombre=\'"+ cte.getNombre() + "\',telefono=\'"+ cte.getTelefono()+ "\',direccion=\'"+ cte.getDireccion() +"\' WHERE idcliente=" + cte.getId()+";";
+        String query = "UPDATE cliente SET nombre=\'"+ cte.getNombre() + "\',telefono=\'"+ cte.getTelefono()+ "\',direccion=\'"+ cte.getDireccion() +"\' WHERE idcliente=" + id+";";
         
         try {
             Statement s = conn.createStatement();
             s.execute(query);
-            return true;
+            conn.close();
+            return true; //Redundante? execute devuelve boolean
+            //Nope, hay que cerrar la conexion(?
         } catch (SQLException e) {
             System.out.println(e);
             return false;
-        }
+        } 
 
     }
 

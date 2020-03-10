@@ -31,7 +31,13 @@ public class NegocioCliente {
     }
     
     public boolean updCliente(ModeloCliente cte) {
-        throw new UnsupportedOperationException("Not yet...");
+        if(validarCliente(Integer.toString(cte.getId()))){
+            System.out.println("Se encontró el cliente! Llamando a actualizar()..");
+            return ctes.actualizar(cte);
+        }
+        
+        System.out.println("El cliente no existe... No hay nada que actualizar.");
+        return false;
     }
     
     public ModeloCliente buscarCliente(String cte) {
@@ -57,10 +63,10 @@ public class NegocioCliente {
         }
         return true;
     }
+    
      /*Este método busca un ID en la base de datos*/
     public boolean validarCliente(String id) {
         return ctes.buscarID(id);
     }
-    
     
 }

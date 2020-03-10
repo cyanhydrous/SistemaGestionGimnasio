@@ -6,11 +6,16 @@
 package DAO;
 
 import Modelos.ModeloCliente;
+import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -26,57 +31,69 @@ public class dbtest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        ModeloCliente m = new ModeloCliente(4,"Bulio6969","173141","Campanario");
-//        NegocioCliente nc = new NegocioCliente();
-//        nc.addCliente(m);
+//
+//            ModeloCliente mc = new ModeloCliente(1,"Boshua","545454","Sukasa");
+//            LocalDate ld = LocalDate.parse("2020-05-10");
+//            LocalDate s = LocalDate.now();
+//            System.out.println(ld.toString());
+//            System.out.println(s.toString());
+//            ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
+//            DAOMembresias dm = new DAOMembresias();
+//
+//            dm.agregar(mm);
+//            
+//        List l = dm.getAll();
+//
+//        for (Object l1 : l) {
+//            ModeloMembresia m = (ModeloMembresia) l1;
+//            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
+//        }
 
-        actualizarCte(m);
     }
-    
-    public static void actualizarCte(ModeloCliente cte){
+
+    public static void actualizarCte(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.actualizar(cte));
     }
-    
-    public static void buscarID(String id){
+
+    public static void buscarID(String id) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.buscarID(id));
     }
-    
-    public static int generateUniqueId() {      
+
+    public static int generateUniqueId() {
         UUID idOne = UUID.randomUUID();
-        System.out.println("idOne: "+ idOne);
-        String str=""+idOne;
-        System.out.println("srt: "+ str);
-        int uid=str.hashCode();
+        System.out.println("idOne: " + idOne);
+        String str = "" + idOne;
+        System.out.println("srt: " + str);
+        int uid = str.hashCode();
         System.out.println("uid: " + uid);
-        String filterStr=""+uid;
-        System.out.println("filterStr: "+ filterStr);
-        str=filterStr.replaceAll("-", "").substring(3,9);
+        String filterStr = "" + uid;
+        System.out.println("filterStr: " + filterStr);
+        str = filterStr.replaceAll("-", "").substring(3, 9);
         return Integer.parseInt(str);
     }
-    
-    private static void buscar(ModeloCliente cte){
+
+    private static void buscar(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.buscar((Object) cte));
     }
-    
-    private static void insertar(ModeloCliente cte){
+
+    private static void insertar(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.agregar((Object) cte));
     }
-    
-    private static void getAllTest(){
+
+    private static void getAllTest() {
         DAOClientes d = new DAOClientes();
         List list = d.getAll();
         for (int i = 0; i < list.size(); i++) {
             ModeloCliente ct = (ModeloCliente) list.get(i);
-            System.out.print("Nombre: " + ct.getNombre() +", Direccion: " + ct.getDireccion() + ", Telefono: " + ct.getTelefono() + "\n");
+            System.out.print("Nombre: " + ct.getNombre() + ", Direccion: " + ct.getDireccion() + ", Telefono: " + ct.getTelefono() + "\n");
         }
     }
-    
-    private static void uh(){
+
+    private static void uh() {
         ConexionMySQL c = new ConexionMySQL();
         Connection conn = c.connect();
         try {

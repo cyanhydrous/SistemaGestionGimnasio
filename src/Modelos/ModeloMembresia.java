@@ -5,6 +5,7 @@
  */
 package Modelos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,15 +13,40 @@ import java.util.Date;
  * @author phant
  */
 public class ModeloMembresia {
-    String id;
+    int id;
     ModeloCliente cliente;
-    Date fechaIn, fechaFin;
+    LocalDate fechaIn, fechaFin;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public ModeloMembresia(){
+        
+    }
+    
+    public ModeloMembresia(int id, ModeloCliente cliente, LocalDate fechaIn, LocalDate fechaFin) {
+        this.id = id;
+        this.cliente = cliente;
+        this.fechaIn = fechaIn;
+        this.fechaFin = fechaFin;
+    }
+
+    public ModeloMembresia(int id, String fechaIn, String fechaFin, int idcliente) {
+        this.id = id;
+        this.cliente = new ModeloCliente();
+        this.cliente.setId(idcliente);
+        this.fechaIn = LocalDate.parse(fechaIn);
+        this.fechaFin = LocalDate.parse(fechaFin);
+    }
+    
+    public ModeloMembresia(ModeloCliente cliente, LocalDate fechaIn, LocalDate fechaFin) {
+        this.cliente = cliente;
+        this.fechaIn = fechaIn;
+        this.fechaFin = fechaFin;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -32,21 +58,27 @@ public class ModeloMembresia {
         this.cliente = cliente;
     }
 
-    public Date getFechaIn() {
+    public LocalDate getFechaIn() {
         return fechaIn;
     }
 
-    public void setFechaIn(Date fechaIn) {
+    public void setFechaIn(LocalDate fechaIn) {
         this.fechaIn = fechaIn;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    @Override
+    public String toString() {
+        return "ModeloMembresia{" + "id=" + id + ", cliente=" + cliente + ", fechaIn=" + fechaIn + ", fechaFin=" + fechaFin + '}';
+    }
+    
     
     
 }
