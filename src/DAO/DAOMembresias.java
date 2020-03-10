@@ -44,7 +44,21 @@ public class DAOMembresias implements IDAO {
 
     @Override
     public boolean eliminar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+        ModeloMembresia mm = (ModeloMembresia) obj;
+        
+        String query = "DELETE FROM membresia WHERE idcliente=" + mm.getCliente().getId() + ";";
+        
+        try {
+            Statement s = conn.createStatement();
+            s.execute(query);
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
@@ -54,7 +68,7 @@ public class DAOMembresias implements IDAO {
         ModeloMembresia mm = (ModeloMembresia) obj;
         
         String query = "UPDATE membresia SET fecha_inicial=\'"+ mm.getFechaIn().toString() + "\',fecha_fin=\'"+ mm.getFechaFin().toString()+ "\' WHERE idcliente=" + mm.getCliente().getId()+";";
-        System.out.println(query);
+        
         try {
             Statement s = conn.createStatement();
             s.execute(query);

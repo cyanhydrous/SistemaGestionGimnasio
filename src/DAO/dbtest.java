@@ -38,12 +38,9 @@ public class dbtest {
             ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
             DAOMembresias dm = new DAOMembresias();
 
-            dm.agregar(mm);
-            
-            ld = LocalDate.parse("2020-06-10");
+            dm.eliminar(mm);
             
             
-            dm.actualizar(mm);
             
         List l = dm.getAll();
 
