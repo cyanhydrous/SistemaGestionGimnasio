@@ -44,3 +44,4 @@ CREATE TABLE `membresia` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-03-10 14:24:51
+-- Se agregó una restricción de unique key para idcliente
