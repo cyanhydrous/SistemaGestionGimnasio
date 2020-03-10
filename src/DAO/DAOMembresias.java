@@ -5,15 +5,12 @@
  */
 package DAO;
 
-import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,6 +89,18 @@ public class DAOMembresias implements IDAO {
         }
         return false;
     }
+    //Para testing nada mas. A lo mejor se elimina luego.
+    public boolean existeMembresiaIdCliente(int id) {
+        List lista = getAll();
+
+        for (Object lis : lista) {
+            ModeloMembresia mem = (ModeloMembresia) lis;
+            if (mem.getCliente().getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public Object get(Object obj) {
@@ -116,13 +125,6 @@ public class DAOMembresias implements IDAO {
         } catch (SQLException | NumberFormatException ex) {
             System.out.println(ex);
         }
-
         return membresias;
-    }
-    
-//    private String javaDateToMysql(Date dt){ Ya no se ocupa
-//        String pattern = "yyyy-MM-dd";
-//        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-//        return formatter.format(dt);
-//    }
+    }    
 }

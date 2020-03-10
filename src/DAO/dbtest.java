@@ -38,9 +38,9 @@ public class dbtest {
             ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
             DAOMembresias dm = new DAOMembresias();
 
-            dm.eliminar(mm);
+            //dm.eliminar(mm);
             
-            
+            System.out.println(dm.existeMembresiaIdCliente(1));
             
         List l = dm.getAll();
 
