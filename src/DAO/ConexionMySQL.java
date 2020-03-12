@@ -31,7 +31,7 @@ public class ConexionMySQL {
     public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
 
     // Nombre de usuario
-    public String username = "root";
+    public String username = "phantomcide";
 
     // Clave de usuario
     public String password = "sesamo";

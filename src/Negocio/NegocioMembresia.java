@@ -47,7 +47,17 @@ public class NegocioMembresia {
 
     public boolean isMembresiaVigente(String id) {       
         LocalDate hoy = LocalDate.now();
+        ModeloMembresia ms = (ModeloMembresia) membs.get(id);
         
+        if (ms == null) {
+            System.out.println("No existe una membresia con ese id");
+            return false;
+        } else if (ms.getFechaFin().isAfter(hoy)) {
+            System.out.println("La membresia es vigente");
+            return true;
+        }
+        
+        System.out.println("La membresía no es vigente");
         return false;
     }
 

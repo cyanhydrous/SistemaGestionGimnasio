@@ -7,7 +7,7 @@ package DAO;
 
 import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
-import Negocio.NegocioCliente;
+import Negocio.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,23 +32,29 @@ public class dbtest {
      */
     public static void main(String[] args) {
 
-            ModeloCliente mc = new ModeloCliente(399755,"Bulio Iván","444","ffffff");
-            LocalDate ld = LocalDate.parse("2020-05-10");
+            //ModeloCliente mc = new ModeloCliente(387375,"Bulio Iván","444","ffffff");
+            ModeloCliente mc1 = new ModeloCliente(433257,"Memb Vigente Test", "666", "En su casa");
+            //LocalDate ld = LocalDate.parse("2018-05-10");
+            LocalDate ld = LocalDate.now();
             LocalDate s = LocalDate.now();
-            ModeloMembresia mm = new ModeloMembresia(mc, s, ld);
+            ModeloMembresia mm = new ModeloMembresia(mc1, s, ld);
             DAOMembresias dm = new DAOMembresias();
-
+            DAOClientes dc = new DAOClientes();
+            dm.agregar(mm);
             //dm.eliminar(mm);
             
-            System.out.println(dm.existeMembresiaIdCliente(1));
-            
-        List l = dm.getAll();
+//            System.out.println(dm.existeMembresiaIdCliente(387375));
+//            
+//        List l = dm.getAll();
+//
+//        for (Object l1 : l) {
+//            ModeloMembresia m = (ModeloMembresia) l1;
+//            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
+//        }
 
-        for (Object l1 : l) {
-            ModeloMembresia m = (ModeloMembresia) l1;
-            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
-        }
-
+        NegocioMembresia nm = new NegocioMembresia();
+        System.out.println(nm.isMembresiaVigente("433257"));
+        
     }
 
     public static void actualizarCte(ModeloCliente cte) {
