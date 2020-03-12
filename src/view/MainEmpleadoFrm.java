@@ -19,6 +19,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     public MainEmpleadoFrm() {
         initComponents();
         this.setTitle("STEEL FACTORY GYM SISTEMA DE GESTION");
+        this.setLocationRelativeTo(null);
         
     }
 

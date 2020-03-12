@@ -4,18 +4,24 @@
  * and open the template in the editor.
  */
 package view;
-
+import Negocio.NegocioCliente;
+import Negocio.NegocioMembresia;
 /**
  *
  * @author joshua
  */
 public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
+    String accion;
+    NegocioCliente clientes = new NegocioCliente();
+    NegocioMembresia membresias = new NegocioMembresia();
     /**
      * Creates new form formularioModificarClienteFmr
      */
     public formularioModificarClienteFmr(String accion) {
+        this.accion = accion;
         initComponents();
+        this.setLocationRelativeTo(null);
         if(accion=="registrar"){
             this.setTitle("Registrar Membresia");
             
@@ -49,7 +55,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txfNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        tfDireccion = new javax.swing.JTextField();
+        txfDireccion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txfID = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
@@ -57,7 +63,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txfTelefono = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
         jLabel1.setText("STEEL FACTORY GYM");
@@ -75,6 +81,11 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         jLabel4.setText("ID");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,10 +123,9 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txfID, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tfDireccion)
-                        .addComponent(txfNombre)
-                        .addComponent(txfTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)))
+                    .addComponent(txfDireccion)
+                    .addComponent(txfNombre)
+                    .addComponent(txfTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -134,7 +144,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(tfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -150,9 +160,37 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        String nombre = txfNombre.getText();
+        String direccion = txfDireccion.getText();
+        String telefono = txfTelefono.getText();
+        
+        validarEntrada();
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private boolean validarEntrada(){
+        
+        if (!txfNombre.getText().matches("[a-zA-Z\\s]+")){
+            System.out.println("Nombre invalido");
+            return false;
+        } else if (!txfDireccion.getText().matches("[a-zA-Z\\s]+")){
+            System.out.println("Dirección invalida");
+            return false;
+        } else if (!txfTelefono.getText().matches("[0-9]")){
+            System.out.println("El telefono no puede contener caracteres que no sean numeros");
+            return false;
+        } else if (txfTelefono.getText().length() != 10){
+            System.out.println("El telefono debe tener 10 digitos");
+            return false;
+        }
+        
+        System.out.println("OK");
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -198,7 +236,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField tfDireccion;
+    private javax.swing.JTextField txfDireccion;
     private javax.swing.JTextField txfID;
     private javax.swing.JTextField txfNombre;
     private javax.swing.JTextField txfTelefono;

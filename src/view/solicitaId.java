@@ -17,6 +17,7 @@ public class solicitaId extends javax.swing.JFrame {
     public solicitaId(String accion) {
         initComponents();
         this.Accion=accion;
+        
     }
           public solicitaId() {
         initComponents();
@@ -35,7 +36,7 @@ public class solicitaId extends javax.swing.JFrame {
         btnContinuar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Ingresar ID del Cliente");
@@ -132,11 +133,11 @@ public class solicitaId extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new solicitaId().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new solicitaId().setVisible(true);
+//            }
+//        });
     }
   /**  public boolean esIdValido(String id){
         if(id.length()== 6){
