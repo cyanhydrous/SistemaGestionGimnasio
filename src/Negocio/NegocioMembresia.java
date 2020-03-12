@@ -8,54 +8,50 @@ package Negocio;
 import DAO.DAOClientes;
 import DAO.DAOMembresias;
 import Modelos.ModeloMembresia;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
  * @author phant
  */
 public class NegocioMembresia {
+
     DAOMembresias membs = new DAOMembresias();
     DAOClientes ctes = new DAOClientes();
-    
+
     public boolean addMembresia(ModeloMembresia mem) {
-        throw new UnsupportedOperationException("lol nope");
+        return membs.agregar(mem);
     }
-    
+
+    //Hay que ver si se va ocupar en el futuro
     public boolean delMembresia(ModeloMembresia mem) {
-        throw new UnsupportedOperationException("lol nope");
+        return membs.eliminar(mem);
     }
-    
+
     public boolean updMembresia(ModeloMembresia mem) {
-        throw new UnsupportedOperationException("lol nope");
+        return membs.actualizar(mem);
     }
-    
+
     public boolean buscarMembresia(String id) {
         throw new UnsupportedOperationException("lol nope");
     }
-    
+
     public ModeloMembresia obtenerMembresia(String id) {
         throw new UnsupportedOperationException("lol nope");
     }
-    
-    public ArrayList desplegarMembresias() {
-        throw new UnsupportedOperationException("lol nope");
+
+    public List desplegarMembresias() {
+        return membs.getAll();
     }
-    
-    public boolean validarMembresia(ModeloMembresia mem) {
-        throw new UnsupportedOperationException("lol nope");
+
+    public boolean isMembresiaVigente(String id) {       
+        LocalDate hoy = LocalDate.now();
+        
+        return false;
     }
-    
-    public boolean validarMembresia(Date fecha) {
-        throw new UnsupportedOperationException("lol nope");
-    }
-    
-    public boolean isMembresiaVigente(String id) {
-        throw new UnsupportedOperationException("lol nope");
-    }
-    
-    public boolean renovarFechaVenc(ModeloMembresia mem, Date fecha) {
+
+    public boolean renovarFechaVenc(ModeloMembresia mem, LocalDate fecha) {
         throw new UnsupportedOperationException("lol nope");
     }
 }

@@ -24,9 +24,9 @@ public class DAOMembresias implements IDAO {
         ConexionMySQL c = new ConexionMySQL();
         Connection conn = c.connect();
         ModeloMembresia mem = (ModeloMembresia) obj;
-        
-        String query = "INSERT INTO membresia(fecha_inicial, fecha_fin, idcliente) VALUES(\'" + mem.getFechaIn().toString() + "\',\'" + mem.getFechaFin().toString() + "\',\'"+ mem.getCliente().getId() +"\');";
-        
+
+        String query = "INSERT INTO membresia(fecha_inicial, fecha_fin, idcliente) VALUES(\'" + mem.getFechaIn().toString() + "\',\'" + mem.getFechaFin().toString() + "\',\'" + mem.getCliente().getId() + "\');";
+
         try {
             Statement s = conn.createStatement();
             s.execute(query);
@@ -44,9 +44,9 @@ public class DAOMembresias implements IDAO {
         ConexionMySQL c = new ConexionMySQL();
         Connection conn = c.connect();
         ModeloMembresia mm = (ModeloMembresia) obj;
-        
+
         String query = "DELETE FROM membresia WHERE idcliente=" + mm.getCliente().getId() + ";";
-        
+
         try {
             Statement s = conn.createStatement();
             s.execute(query);
@@ -63,9 +63,9 @@ public class DAOMembresias implements IDAO {
         ConexionMySQL c = new ConexionMySQL();
         Connection conn = c.connect();
         ModeloMembresia mm = (ModeloMembresia) obj;
-        
-        String query = "UPDATE membresia SET fecha_inicial=\'"+ mm.getFechaIn().toString() + "\',fecha_fin=\'"+ mm.getFechaFin().toString()+ "\' WHERE idcliente=" + mm.getCliente().getId()+";";
-        
+
+        String query = "UPDATE membresia SET fecha_inicial=\'" + mm.getFechaIn().toString() + "\',fecha_fin=\'" + mm.getFechaFin().toString() + "\' WHERE idcliente=" + mm.getCliente().getId() + ";";
+
         try {
             Statement s = conn.createStatement();
             s.execute(query);
@@ -80,6 +80,7 @@ public class DAOMembresias implements IDAO {
 
     @Override
     public boolean buscar(Object obj) {
+
         List lista = getAll();
 
         for (Object mem : lista) {
@@ -89,6 +90,7 @@ public class DAOMembresias implements IDAO {
         }
         return false;
     }
+
     //Para testing nada mas. A lo mejor se elimina luego.
     public boolean existeMembresiaIdCliente(int id) {
         List lista = getAll();
@@ -102,9 +104,25 @@ public class DAOMembresias implements IDAO {
         return false;
     }
 
+    /*Este método devuelve una membresía en base a un id de un cliente*/
     @Override
     public Object get(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        int id = Integer.parseInt(obj.toString());
+        if (existeMembresiaIdCliente(id)) {
+            List lista = getAll();
+
+            for (Object ob : lista) {
+                ModeloMembresia mm = (ModeloMembresia) ob;
+                if (mm.getCliente().getId() == id) {
+                    System.out.println("Se encontró la membresía");
+                    return mm;
+                }
+            }
+        }
+        System.out.println("No hay una membresía con ese idcliente");
+
+        return null;
     }
 
     @Override
@@ -118,7 +136,7 @@ public class DAOMembresias implements IDAO {
             String query = "SELECT * FROM membresia";
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
-                ModeloMembresia cte = new ModeloMembresia(Integer.parseInt(rs.getString("idmembresia")),rs.getString("fecha_inicial"), rs.getString("fecha_fin"), Integer.parseInt(rs.getString("idcliente")));
+                ModeloMembresia cte = new ModeloMembresia(Integer.parseInt(rs.getString("idmembresia")), rs.getString("fecha_inicial"), rs.getString("fecha_fin"), Integer.parseInt(rs.getString("idcliente")));
                 membresias.add(cte);
             }
             conn.close();
@@ -126,5 +144,5 @@ public class DAOMembresias implements IDAO {
             System.out.println(ex);
         }
         return membresias;
-    }    
+    }
 }
