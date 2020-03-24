@@ -5,13 +5,19 @@
  */
 package view;
 
+import Modelos.ModeloMembresia;
+import Negocio.NegocioMembresia;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author joshua
  */
 public class MainEmpleadoFrm extends javax.swing.JFrame {
+
+    NegocioMembresia membs = new NegocioMembresia();
 
     /**
      * Creates new form MainEmpleadoFrm
@@ -20,7 +26,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         initComponents();
         this.setTitle("STEEL FACTORY GYM SISTEMA DE GESTION");
         this.setLocationRelativeTo(null);
-        
+        vaciarTabla();
+        rellenarTabla(membs.desplegarMembresias());
     }
 
     /**
@@ -34,7 +41,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         labelImagen = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
+        btnActualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         objMenuRegistrarMembresia = new javax.swing.JMenuItem();
@@ -48,7 +56,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         labelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/steelFactoryGym.jpg"))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -74,7 +82,14 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Membresia");
 
@@ -119,17 +134,21 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 346, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(btnActualizar)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,15 +160,33 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_objMenuRenovarMembresiaActionPerformed
 
     private void objMenuRegistrarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarMembresiaActionPerformed
-            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("registrar");
-       modificar.setVisible(true);
-        
+        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("registrar");
+        modificar.setVisible(true);
+
     }//GEN-LAST:event_objMenuRegistrarMembresiaActionPerformed
 
     private void objMenuModificarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuModificarMembresiaActionPerformed
-     solicitaId si= new solicitaId("Modificar");
-     si.setVisible(true);
+        solicitaId si = new solicitaId("Modificar");
+        si.setVisible(true);
     }//GEN-LAST:event_objMenuModificarMembresiaActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        rellenarTabla(membs.desplegarMembresias());
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void rellenarTabla(List memlista) {
+        vaciarTabla();
+        for (Object obj : memlista) {
+            ModeloMembresia mem = (ModeloMembresia) obj;
+            ((DefaultTableModel) tabla.getModel()).addRow(new Object[]{
+                mem.getCliente().getId(), mem.getCliente().getNombre(), mem.getFechaIn().toString(), mem.getFechaFin().toString()});
+        }
+    }
+
+    private void vaciarTabla() {
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.setRowCount(0);
+    }
 
     /**
      * @param args the command line arguments
@@ -182,23 +219,24 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainEmpleadoFrm().setVisible(true);
-               
+
             }
         });
-      
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelImagen;
     private javax.swing.JMenuItem objMenuModificarMembresia;
     private javax.swing.JMenuItem objMenuRegistrarMembresia;
     private javax.swing.JMenuItem objMenuRenovarMembresia;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
