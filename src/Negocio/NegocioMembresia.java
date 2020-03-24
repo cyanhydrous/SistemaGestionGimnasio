@@ -17,10 +17,10 @@ import java.util.List;
  * @author phant
  */
 public class NegocioMembresia {
-
+    
     DAOMembresias membs = new DAOMembresias();
     DAOClientes ctes = new DAOClientes();
-
+    
     public boolean addMembresia(ModeloMembresia mem) {
         return membs.agregar(mem);
     }
@@ -29,43 +29,50 @@ public class NegocioMembresia {
     public boolean delMembresia(ModeloMembresia mem) {
         return membs.eliminar(mem);
     }
-
+    
     public boolean updMembresia(ModeloMembresia mem) {
         return membs.actualizar(mem);
     }
-
+    
     public boolean buscarMembresia(String id) {
         throw new UnsupportedOperationException("lol nope");
     }
-
+    
     public ModeloMembresia obtenerMembresia(String id) {
-        throw new UnsupportedOperationException("lol nope");
+        List mems = desplegarMembresias();
+        for (int i = 0; i < mems.size(); i++) {
+            ModeloMembresia mm = (ModeloMembresia) mems.get(i);
+            if (Integer.toString(mm.getCliente().getId()).equals(id)){
+                return mm;
+            }
+        }
+        return null;
     }
-
+    
     public List desplegarMembresias() {
         List membresias = membs.getAll();
         List clientes = ctes.getAll();
-        for (int i = 0; i<membresias.size(); i++) {
+        for (int i = 0; i < membresias.size(); i++) {
             ModeloMembresia mem = (ModeloMembresia) membresias.get(i);
             for (int j = 0; j < clientes.size(); j++) {
                 ModeloCliente cte = (ModeloCliente) clientes.get(j);
-                if(mem.getCliente().getId() == cte.getId()){
+                if (mem.getCliente().getId() == cte.getId()) {
                     mem.setCliente(cte);
                 }
             }
         }
-
+        
         return membresias;
     }
-
+    
     public boolean existeMembresiaIdCliente(int id) {
         return membs.existeMembresiaIdCliente(id);
     }
-
+    
     public boolean isMembresiaVigente(String id) {
         LocalDate hoy = LocalDate.now();
         ModeloMembresia ms = (ModeloMembresia) membs.get(id);
-
+        
         if (ms == null) {
             System.out.println("No existe una membresia con ese id");
             return false;
@@ -73,11 +80,11 @@ public class NegocioMembresia {
             System.out.println("La membresia es vigente");
             return true;
         }
-
+        
         System.out.println("La membresía no es vigente");
         return false;
     }
-
+    
     public boolean renovarFechaVenc(ModeloMembresia mem, LocalDate fecha) {
         throw new UnsupportedOperationException("lol nope");
     }

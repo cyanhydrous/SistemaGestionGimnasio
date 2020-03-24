@@ -31,6 +31,7 @@ public class NegocioCliente {
     }
     
     public boolean updCliente(ModeloCliente cte) {
+        System.out.println("NegocioCliente: Buscando ID " + cte.getId());
         if(validarCliente(Integer.toString(cte.getId()))){
             System.out.println("Se encontró el cliente! Llamando a actualizar()..");
             return ctes.actualizar(cte);

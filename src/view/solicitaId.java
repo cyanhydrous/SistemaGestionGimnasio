@@ -6,7 +6,10 @@
 package view;
 
 import Modelos.ModeloCliente;
+import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
+import Negocio.NegocioMembresia;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,20 +17,29 @@ import javax.swing.JOptionPane;
  * @author joshua
  */
 public class solicitaId extends javax.swing.JFrame {
+
     private String Accion;
     private ModeloCliente cte;
     private NegocioCliente clientes = new NegocioCliente();
+    private NegocioMembresia membresias = new NegocioMembresia();
+    private MainEmpleadoFrm main;
+
     /**
      * Creates new form solicitaId
      */
-    public solicitaId(String accion) {
+    public solicitaId(String accion, MainEmpleadoFrm main) {
+        this.main = main;
         initComponents();
-        this.Accion=accion;
-        
+        this.Accion = accion;
+        this.setLocationRelativeTo(null);
+
     }
-          public solicitaId() {
+
+    public solicitaId() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +119,7 @@ public class solicitaId extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         String id = txtId.getText();
-        if(!validarCteID(id)){
+        if (!validarCteID(id)) {
             JOptionPane.showMessageDialog(null, "No existe un cliente con ese ID");
         } else {
             desplegarFormulario();
@@ -118,29 +130,37 @@ public class solicitaId extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
-    private void desplegarFormulario(){
-        if("Modificar".equals(Accion)){
-              formularioModificarClienteFmr modificar = new formularioModificarClienteFmr();
-       modificar.setVisible(true);
+    private void desplegarFormulario() {
+        if ("Modificar".equals(Accion)) {
+            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(main);
+            llenarFormulario(modificar);
+        } else if ("Renovar".equals(Accion)) {
+            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", main);
+            llenarFormulario(modificar);
+
         }
-        else if("Renovar".equals(Accion)){
-            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar");
-       modificar.setVisible(true);
-            
-        }
-        
+
         this.dispose();
     }
-    
-    private boolean validarCteID(String id){
-        if(clientes.validarCliente(id)){
+
+    private void llenarFormulario(formularioModificarClienteFmr modificar) {
+        ModeloMembresia mem = membresias.obtenerMembresia(txtId.getText());
+        modificar.txfNombre.setText(mem.getCliente().getNombre());
+        modificar.txfDireccion.setText(mem.getCliente().getDireccion());
+        modificar.txfTelefono.setText(mem.getCliente().getTelefono());
+        modificar.txfID.setText(Integer.toString(mem.getCliente().getId()));
+        modificar.setVisible(true);
+    }
+
+    private boolean validarCteID(String id) {
+        if (clientes.validarCliente(id)) {
             System.out.println("El cliente existe!");
             return true;
         }
         System.out.println("El cliente no existe!");
         return false;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -175,14 +195,15 @@ public class solicitaId extends javax.swing.JFrame {
 //            }
 //        });
     }
-  /**  public boolean esIdValido(String id){
-        if(id.length()== 6){
-            for(int i=0; i<id.length(); i++){
-                
-            }
-        }
-    }
-     **/
+    /**
+     * public boolean esIdValido(String id){ if(id.length()== 6){ for(int i=0;
+     * i<id.length(); i++){
+     *
+     * }
+     * }
+     * }
+     *
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;

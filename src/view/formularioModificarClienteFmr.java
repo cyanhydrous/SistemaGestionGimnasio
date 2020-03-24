@@ -17,14 +17,16 @@ import javax.swing.JOptionPane;
  */
 public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
-    String accion;
+    String accion = "modificar";
     double precio = 0;
     NegocioCliente clientes = new NegocioCliente();
     NegocioMembresia membresias = new NegocioMembresia();
+    MainEmpleadoFrm main;
     /**
      * Creates new form formularioModificarClienteFmr
      */
-    public formularioModificarClienteFmr(String accion) {
+    public formularioModificarClienteFmr(String accion, MainEmpleadoFrm main) {
+        this.main = main;
         this.accion = accion;
         initComponents();
         this.setLocationRelativeTo(null);
@@ -45,7 +47,15 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Modificar Membresia");
         txfID.setEditable(false);
+        this.setLocationRelativeTo(null);
+    }
         
+        public formularioModificarClienteFmr(MainEmpleadoFrm main) {
+        initComponents();
+        this.main = main;
+        this.setTitle("Modificar Membresia");
+        txfID.setEditable(false);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -179,9 +189,56 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
                
         //validarEntrada(); No funca todavía
-        registrarMembresia();
+        
+        switch (accion){
+            case "registrar":
+                registrarMembresia();
+                break;
+            case "renovar":
+                break;
+            case "modificar":
+                modificarMembresia();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Esta ventana no se inicializó correctamente");
+                this.dispose();
+                break;                
+        }
+        
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void modificarMembresia(){
+        String nombre = txfNombre.getText();
+        String direccion = txfDireccion.getText();
+        String telefono = txfTelefono.getText();
+        LocalDate hoy = LocalDate.now();
+        String anio = Integer.toString(hoy.getYear());
+        String mes = Integer.toString(hoy.getMonthValue());
+        String dia = Integer.toString(hoy.getDayOfMonth());   
+        
+        LocalDate fin = getFechaFin();
+        String tipo = comboTipo.getSelectedItem().toString();
+        int id = Integer.parseInt(txfID.getText());
+        
+        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);      
+        ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
+        boolean exitocte = clientes.updCliente(cte);
+        boolean exitomem = membresias.updMembresia(mem);
+        
+        if (!exitocte || !exitomem){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
+        } else {
+            JOptionPane.showMessageDialog(null, "Se actualizó la membresia con el ID: " + cte.getId());
+            try{
+                main.llenarTabla();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+        }
+    }
+    
     private void registrarMembresia(){
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
@@ -202,6 +259,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
         } else {
             JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() +"\n El precio es de: " + precio);
+            main.llenarTabla();
         }
     }
     
@@ -309,9 +367,9 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txfDireccion;
-    private javax.swing.JTextField txfID;
-    private javax.swing.JTextField txfNombre;
-    private javax.swing.JTextField txfTelefono;
+    public javax.swing.JTextField txfDireccion;
+    public javax.swing.JTextField txfID;
+    public javax.swing.JTextField txfNombre;
+    public javax.swing.JTextField txfTelefono;
     // End of variables declaration//GEN-END:variables
 }

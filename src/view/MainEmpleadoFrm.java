@@ -155,18 +155,18 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void objMenuRenovarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRenovarMembresiaActionPerformed
-        solicitaId si = new solicitaId("Renovar");
+        solicitaId si = new solicitaId("Renovar", this);
         si.setVisible(true);
     }//GEN-LAST:event_objMenuRenovarMembresiaActionPerformed
 
     private void objMenuRegistrarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarMembresiaActionPerformed
-        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("registrar");
+        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("registrar", this);
         modificar.setVisible(true);
 
     }//GEN-LAST:event_objMenuRegistrarMembresiaActionPerformed
 
     private void objMenuModificarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuModificarMembresiaActionPerformed
-        solicitaId si = new solicitaId("Modificar");
+        solicitaId si = new solicitaId("Modificar", this);
         si.setVisible(true);
     }//GEN-LAST:event_objMenuModificarMembresiaActionPerformed
 
@@ -174,6 +174,10 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         rellenarTabla(membs.desplegarMembresias());
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    public void llenarTabla(){
+        rellenarTabla(membs.desplegarMembresias());
+    }
+    
     private void rellenarTabla(List memlista) {
         vaciarTabla();
         for (Object obj : memlista) {
