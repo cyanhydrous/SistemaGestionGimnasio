@@ -5,12 +5,18 @@
  */
 package view;
 
+import Modelos.ModeloCliente;
+import Negocio.NegocioCliente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joshua
  */
 public class solicitaId extends javax.swing.JFrame {
     private String Accion;
+    private ModeloCliente cte;
+    private NegocioCliente clientes = new NegocioCliente();
     /**
      * Creates new form solicitaId
      */
@@ -40,6 +46,12 @@ public class solicitaId extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Ingresar ID del Cliente");
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
 
         btnContinuar.setText("Continuar");
         btnContinuar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,17 +106,41 @@ public class solicitaId extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        if(Accion=="Modificar"){
+        String id = txtId.getText();
+        if(!validarCteID(id)){
+            JOptionPane.showMessageDialog(null, "No existe un cliente con ese ID");
+        } else {
+            desplegarFormulario();
+        }
+    }//GEN-LAST:event_btnContinuarActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void desplegarFormulario(){
+        if("Modificar".equals(Accion)){
               formularioModificarClienteFmr modificar = new formularioModificarClienteFmr();
        modificar.setVisible(true);
         }
-        else if(Accion== "Renovar"){
+        else if("Renovar".equals(Accion)){
             formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar");
        modificar.setVisible(true);
             
         }
-    }//GEN-LAST:event_btnContinuarActionPerformed
-
+        
+        this.dispose();
+    }
+    
+    private boolean validarCteID(String id){
+        if(clientes.validarCliente(id)){
+            System.out.println("El cliente existe!");
+            return true;
+        }
+        System.out.println("El cliente no existe!");
+        return false;
+    }
+    
     /**
      * @param args the command line arguments
      */

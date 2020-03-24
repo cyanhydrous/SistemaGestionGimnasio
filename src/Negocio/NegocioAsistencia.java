@@ -15,9 +15,20 @@ import java.util.ArrayList;
  */
 public class NegocioAsistencia {
     DAOAsistencias asis = new DAOAsistencias();
+    NegocioMembresia mem = new NegocioMembresia();
     
     public boolean addAsistencia(ModeloAsistencia asi) {
-        throw new UnsupportedOperationException("lol nope");
+        if (mem.existeMembresiaIdCliente(asi.getCliente().getId())) {
+            if (mem.isMembresiaVigente(Integer.toString(asi.getCliente().getId()))) {
+                return asis.agregar(asi);
+            } else {
+                System.out.println("NegocioAsistencia: La membresia no está vigente");
+            }
+        } else {
+            System.out.println("NegocioAsistencia: No existe una membresia con ese ID cliente");
+        }
+        
+        return false;
     }
     
     public boolean delAsistencia(ModeloAsistencia asi) {

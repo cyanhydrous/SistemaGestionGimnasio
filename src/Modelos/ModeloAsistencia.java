@@ -15,7 +15,12 @@ public class ModeloAsistencia {
     ModeloCliente cte;
     Date fecha;
 
-    public ModeloCliente getCte() {
+    public ModeloAsistencia(int id){
+        cte = new ModeloCliente();
+        cte.setId(id);        
+    }
+    
+    public ModeloCliente getCliente() {
         return cte;
     }
 

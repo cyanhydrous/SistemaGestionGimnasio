@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
     String accion;
+    double precio = 0;
     NegocioCliente clientes = new NegocioCliente();
     NegocioMembresia membresias = new NegocioMembresia();
     /**
@@ -198,9 +199,9 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         boolean exitomem = membresias.addMembresia(mem);
         
         if (!exitocte || !exitomem){
-            JOptionPane.showMessageDialog(null, "Ocurrió un error");
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
         } else {
-            JOptionPane.showMessageDialog(null, "Se registró la membresia");
+            JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() +"\n El precio es de: " + precio);
         }
     }
     
@@ -214,10 +215,13 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             if (mes == 12){
                 anio++;
                 mes = 1;
+                precio = 250;
             } else {
                 mes++;
+                precio = 250;
             }
         } else {
+            precio = 100;
             dia += 7;
         }
         String parse = anio+"-0"+mes+"-"+dia;
@@ -233,6 +237,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         String str = "" + idOne;
         int uid = str.hashCode();
         String filterStr = "" + uid;
+        System.out.println(filterStr);
         str = filterStr.replaceAll("-", "").substring(3,9);
         return Integer.parseInt(str);
     }

@@ -5,6 +5,8 @@
  */
 package view;
 
+import Modelos.ModeloAsistencia;
+import Negocio.NegocioAsistencia;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +19,14 @@ import javax.swing.JPanel;
  */
 public class MainClienteFrm extends javax.swing.JFrame {
 
+    NegocioAsistencia asis = new NegocioAsistencia();
 
     /**
      * Creates new form MainClienteFrm
      */
     public MainClienteFrm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -43,6 +47,11 @@ public class MainClienteFrm extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ingresar su ID");
 
+        txfIdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfIdClienteActionPerformed(evt);
+            }
+        });
         txfIdCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txfIdClienteKeyPressed(evt);
@@ -74,12 +83,40 @@ public class MainClienteFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txfIdClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfIdClienteKeyPressed
-      
-        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
-            JOptionPane.showMessageDialog(new JPanel(), "Bienvenido");
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (registrarAsistencia()) {
+                JOptionPane.showMessageDialog(new JPanel(), "Bienvenido");
+            }
+
+            txfIdCliente.setText("");
         }
-  
+
     }//GEN-LAST:event_txfIdClienteKeyPressed
+
+    private boolean registrarAsistencia() {
+
+        if (txfIdCliente.getText().matches("[0-9]+")) {
+            int id = Integer.parseInt(txfIdCliente.getText());
+            ModeloAsistencia as = new ModeloAsistencia(id);
+            
+            boolean stat = asis.addAsistencia(as);
+            
+            if (!stat) {
+                JOptionPane.showMessageDialog(new JPanel(), "No hay una membresia con ese ID o la membresia no está vigente","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            
+            return stat;
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "ID inválido","Error",JOptionPane.ERROR_MESSAGE);
+        }
+
+        return false;
+    }
+
+    private void txfIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIdClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfIdClienteActionPerformed
 
     /**
      * @param args the command line arguments

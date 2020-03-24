@@ -45,6 +45,10 @@ public class NegocioMembresia {
         return membs.getAll();
     }
 
+    public boolean existeMembresiaIdCliente(int id){
+        return membs.existeMembresiaIdCliente(id);
+    }
+    
     public boolean isMembresiaVigente(String id) {       
         LocalDate hoy = LocalDate.now();
         ModeloMembresia ms = (ModeloMembresia) membs.get(id);

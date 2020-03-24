@@ -5,6 +5,11 @@
  */
 package DAO;
 
+import Modelos.ModeloAsistencia;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,7 +20,23 @@ public class DAOAsistencias implements IDAO{
 
     @Override
     public boolean agregar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+        ModeloAsistencia as = (ModeloAsistencia) obj;
+        LocalDate hoy = LocalDate.now();
+
+        System.out.println(as.getCliente().getId());
+        String query = "INSERT IGNORE INTO asistencia(fecha, idcliente) VALUES(\'" + hoy.toString() + "\',\'"  + as.getCliente().getId() + "\');";
+
+        try {
+            Statement s = conn.createStatement();
+            s.execute(query);
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override

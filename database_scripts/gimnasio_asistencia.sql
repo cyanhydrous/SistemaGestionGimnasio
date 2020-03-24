@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `asistencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `asistencia` (
-  `idasistencia` int(11) NOT NULL,
+  `idasistencia` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
   `idcliente` int(11) NOT NULL,
   PRIMARY KEY (`idasistencia`),

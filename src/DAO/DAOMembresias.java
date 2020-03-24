@@ -92,7 +92,6 @@ public class DAOMembresias implements IDAO {
         return false;
     }
 
-    //Para testing nada mas. A lo mejor se elimina luego.
     public boolean existeMembresiaIdCliente(int id) {
         List lista = getAll();
 
