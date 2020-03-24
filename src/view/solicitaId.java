@@ -11,6 +11,7 @@ import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -119,9 +120,7 @@ public class solicitaId extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         String id = txtId.getText();
-        if (!validarCteID(id)) {
-            JOptionPane.showMessageDialog(null, "No existe un cliente con ese ID");
-        } else {
+        if (validarCteID(id)) {
             desplegarFormulario();
         }
     }//GEN-LAST:event_btnContinuarActionPerformed
@@ -149,15 +148,30 @@ public class solicitaId extends javax.swing.JFrame {
         modificar.txfDireccion.setText(mem.getCliente().getDireccion());
         modificar.txfTelefono.setText(mem.getCliente().getTelefono());
         modificar.txfID.setText(Integer.toString(mem.getCliente().getId()));
+
+        if ("Renovar".equals(Accion)) {
+            modificar.txfNombre.setEnabled(false);
+            modificar.txfID.setEnabled(false);
+            modificar.txfDireccion.setEnabled(false);
+            modificar.txfTelefono.setEnabled(false);
+        }
         modificar.setVisible(true);
     }
 
     private boolean validarCteID(String id) {
         if (clientes.validarCliente(id)) {
             System.out.println("El cliente existe!");
+
+            if (Accion.equals("Renovar") && membresias.isMembresiaVigente(id)) {
+                System.out.println("La membresia todavía está vigente, no se puede renovar!");
+                JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente todavía está vigente, no se puede renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+
             return true;
         }
         System.out.println("El cliente no existe!");
+        JOptionPane.showMessageDialog(new JPanel(), "El cliente no existe", "Error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
 

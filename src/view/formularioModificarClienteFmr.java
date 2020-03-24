@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package view;
+
 import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
@@ -11,6 +12,8 @@ import Negocio.NegocioMembresia;
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author joshua
@@ -22,6 +25,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     NegocioCliente clientes = new NegocioCliente();
     NegocioMembresia membresias = new NegocioMembresia();
     MainEmpleadoFrm main;
+
     /**
      * Creates new form formularioModificarClienteFmr
      */
@@ -30,27 +34,27 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         this.accion = accion;
         initComponents();
         this.setLocationRelativeTo(null);
-        if(accion=="registrar"){
+        if (accion == "registrar") {
             this.setTitle("Registrar Membresia");
-            
+
             txfID.setEnabled(false);
             btnModificar.setText("Registrar");
-        }
-        else if(accion == "renovar"){
+        } else if (accion == "renovar") {
             this.setTitle("Renovar Membresia");
             txfID.setEditable(false);
             btnModificar.setText("Renovar");
         }
-        
+
     }
-        public formularioModificarClienteFmr() {
+
+    public formularioModificarClienteFmr() {
         initComponents();
         this.setTitle("Modificar Membresia");
         txfID.setEditable(false);
         this.setLocationRelativeTo(null);
     }
-        
-        public formularioModificarClienteFmr(MainEmpleadoFrm main) {
+
+    public formularioModificarClienteFmr(MainEmpleadoFrm main) {
         initComponents();
         this.main = main;
         this.setTitle("Modificar Membresia");
@@ -187,10 +191,9 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-               
+
         //validarEntrada(); No funca todavía
-        
-        switch (accion){
+        switch (accion) {
             case "registrar":
                 registrarMembresia();
                 break;
@@ -203,106 +206,111 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             default:
                 JOptionPane.showMessageDialog(null, "Esta ventana no se inicializó correctamente");
                 this.dispose();
-                break;                
+                break;
         }
-        
-        
+
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void renovarMembresia(){
+    private void renovarMembresia() {        
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
         String telefono = txfTelefono.getText();
         LocalDate hoy = LocalDate.now();
         String anio = Integer.toString(hoy.getYear());
         String mes = Integer.toString(hoy.getMonthValue());
-        String dia = Integer.toString(hoy.getDayOfMonth());   
-        
+        String dia = Integer.toString(hoy.getDayOfMonth());
+
         LocalDate fin = getFechaFin();
         String tipo = comboTipo.getSelectedItem().toString();
         int id = Integer.parseInt(txfID.getText());
-        
-        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);      
+
+        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);
         ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
-        boolean exitomem = membresias.renovarFechaVenc(mem, fin);
-        
-        
-        if (!exitomem){
-            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
-        } else {
-            JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre());
-            try{
-                main.llenarTabla();
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        if (!membresias.isMembresiaVigente(Integer.toString(id))) {
+            boolean exitomem = membresias.renovarFechaVenc(mem, fin);
+
+            if (!exitomem) {
+                JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre());
+                try {
+                    main.llenarTabla();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-            
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: La membresia aun está vigente","Error",JOptionPane.ERROR_MESSAGE);
         }
+
     }
-    
-    private void modificarMembresia(){
+
+    private void modificarMembresia() {
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
         String telefono = txfTelefono.getText();
         LocalDate hoy = LocalDate.now();
         String anio = Integer.toString(hoy.getYear());
         String mes = Integer.toString(hoy.getMonthValue());
-        String dia = Integer.toString(hoy.getDayOfMonth());   
-        
+        String dia = Integer.toString(hoy.getDayOfMonth());
+
         LocalDate fin = getFechaFin();
         String tipo = comboTipo.getSelectedItem().toString();
         int id = Integer.parseInt(txfID.getText());
-        
-        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);      
+
+        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);
         ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
         boolean exitocte = clientes.updCliente(cte);
         boolean exitomem = membresias.updMembresia(mem);
-        
-        if (!exitocte || !exitomem){
-            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
+
+        if (!exitocte || !exitomem) {
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Se actualizó la membresia con el ID: " + cte.getId());
-            try{
+            try {
                 main.llenarTabla();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
     }
-    
-    private void registrarMembresia(){
+
+    private void registrarMembresia() {
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
         String telefono = txfTelefono.getText();
         LocalDate hoy = LocalDate.now();
         String anio = Integer.toString(hoy.getYear());
         String mes = Integer.toString(hoy.getMonthValue());
-        String dia = Integer.toString(hoy.getDayOfMonth());        
-        
+        String dia = Integer.toString(hoy.getDayOfMonth());
+
         LocalDate fin = getFechaFin();
         String tipo = comboTipo.getSelectedItem().toString();
-        ModeloCliente cte = new ModeloCliente(generateUniqueId(),nombre, telefono, direccion);      
+        ModeloCliente cte = new ModeloCliente(generateUniqueId(), nombre, telefono, direccion);
         ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
         boolean exitocte = clientes.addCliente(cte);
         boolean exitomem = membresias.addMembresia(mem);
-        
-        if (!exitocte || !exitomem){
-            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
+
+        if (!exitocte || !exitomem) {
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() +"\n El precio es de: " + precio);
+            JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() + "\n El precio es de: " + precio);
             main.llenarTabla();
         }
     }
-    
-    private LocalDate getFechaFin(){
+
+    private LocalDate getFechaFin() {
         LocalDate hoy = LocalDate.now();
         int anio = hoy.getYear();
         int mes = hoy.getMonthValue();
         int dia = hoy.getDayOfMonth();
-        
-        if(comboTipo.getSelectedItem().toString().equals("Mensual")){
-            if (mes == 12){
+
+        if (comboTipo.getSelectedItem().toString().equals("Mensual")) {
+            if (mes == 12) {
                 anio++;
                 mes = 1;
                 precio = 260;
@@ -314,10 +322,10 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             precio = 80;
             dia += 7;
         }
-        String parse = anio+"-0"+mes+"-"+dia;
+        String parse = anio + "-0" + mes + "-" + dia;
         return LocalDate.parse(parse);
     }
-    
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -328,30 +336,30 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         int uid = str.hashCode();
         String filterStr = "" + uid;
         System.out.println(filterStr);
-        str = filterStr.replaceAll("-", "").substring(3,9);
+        str = filterStr.replaceAll("-", "").substring(3, 9);
         return Integer.parseInt(str);
     }
-    
-    private boolean validarEntrada(){
-        
-        if (!txfNombre.getText().matches("[a-zA-Z\\s]+")){
+
+    private boolean validarEntrada() {
+
+        if (!txfNombre.getText().matches("[a-zA-Z\\s]+")) {
             System.out.println("Nombre invalido");
             return false;
-        } else if (!txfDireccion.getText().matches("[a-zA-Z\\s]+")){
+        } else if (!txfDireccion.getText().matches("[a-zA-Z\\s]+")) {
             System.out.println("Dirección invalida");
             return false;
-        } else if (!txfTelefono.getText().matches("[0-9]")){
+        } else if (!txfTelefono.getText().matches("[0-9]")) {
             System.out.println("El telefono no puede contener caracteres que no sean numeros");
             return false;
-        } else if (txfTelefono.getText().length() != 10){
+        } else if (txfTelefono.getText().length() != 10) {
             System.out.println("El telefono debe tener 10 digitos");
             return false;
         }
-        
+
         System.out.println("OK");
         return true;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -383,8 +391,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new formularioModificarClienteFmr().setVisible(true);
-                
-                
+
             }
         });
     }
