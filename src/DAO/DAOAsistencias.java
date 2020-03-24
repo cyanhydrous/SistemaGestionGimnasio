@@ -7,9 +7,11 @@ package DAO;
 
 import Modelos.ModeloAsistencia;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,7 +63,24 @@ public class DAOAsistencias implements IDAO{
 
     @Override
     public List getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List asists = new ArrayList<>();
+        ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+
+        try {
+            Statement s = conn.createStatement();
+            String query = "SELECT * FROM asistencia";
+            ResultSet rs = s.executeQuery(query);
+            while (rs.next()) {
+                ModeloAsistencia as = new ModeloAsistencia(Integer.parseInt(rs.getString("idcliente")), rs.getString("fecha"));
+                asists.add(as);
+            }
+            conn.close();
+        } catch (SQLException | NumberFormatException ex) {
+            System.out.println(ex);
+        }
+
+        return asists;
     }
     
 }

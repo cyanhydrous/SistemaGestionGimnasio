@@ -5,6 +5,7 @@
  */
 package Modelos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,11 +14,18 @@ import java.util.Date;
  */
 public class ModeloAsistencia {
     ModeloCliente cte;
-    Date fecha;
+    LocalDate fecha;
 
-    public ModeloAsistencia(int id){
+    public ModeloAsistencia(int id, LocalDate fecha){
         cte = new ModeloCliente();
-        cte.setId(id);        
+        cte.setId(id);       
+        this.fecha = fecha;
+    }
+    
+    public ModeloAsistencia(int id, String fecha){
+        cte = new ModeloCliente();
+        cte.setId(id);       
+        this.fecha = LocalDate.parse(fecha);
     }
     
     public ModeloCliente getCliente() {
@@ -28,11 +36,11 @@ public class ModeloAsistencia {
         this.cte = cte;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

@@ -234,7 +234,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             if (!exitomem) {
                 JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre());
+                JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre() + "\n El precio es de: " + precio);
                 try {
                     main.llenarTabla();
                 } catch (Exception e) {
@@ -399,7 +399,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> comboTipo;
+    public javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

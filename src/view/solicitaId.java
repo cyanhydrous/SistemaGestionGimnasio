@@ -132,6 +132,7 @@ public class solicitaId extends javax.swing.JFrame {
     private void desplegarFormulario() {
         if ("Modificar".equals(Accion)) {
             formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(main);
+            modificar.comboTipo.setEnabled(false);
             llenarFormulario(modificar);
         } else if ("Renovar".equals(Accion)) {
             formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", main);

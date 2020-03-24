@@ -8,6 +8,7 @@ package view;
 import Modelos.ModeloAsistencia;
 import Negocio.NegocioAsistencia;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -98,7 +99,8 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
         if (txfIdCliente.getText().matches("[0-9]+")) {
             int id = Integer.parseInt(txfIdCliente.getText());
-            ModeloAsistencia as = new ModeloAsistencia(id);
+            LocalDate hoy = LocalDate.now();
+            ModeloAsistencia as = new ModeloAsistencia(id, hoy);
             
             boolean stat = asis.addAsistencia(as);
             
