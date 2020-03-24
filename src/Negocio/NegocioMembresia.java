@@ -7,6 +7,7 @@ package Negocio;
 
 import DAO.DAOClientes;
 import DAO.DAOMembresias;
+import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import java.time.LocalDate;
 import java.util.List;
@@ -42,17 +43,29 @@ public class NegocioMembresia {
     }
 
     public List desplegarMembresias() {
-        return membs.getAll();
+        List membresias = membs.getAll();
+        List clientes = ctes.getAll();
+        for (int i = 0; i<membresias.size(); i++) {
+            ModeloMembresia mem = (ModeloMembresia) membresias.get(i);
+            for (int j = 0; j < clientes.size(); j++) {
+                ModeloCliente cte = (ModeloCliente) clientes.get(j);
+                if(mem.getCliente().getId() == cte.getId()){
+                    mem.setCliente(cte);
+                }
+            }
+        }
+
+        return membresias;
     }
 
-    public boolean existeMembresiaIdCliente(int id){
+    public boolean existeMembresiaIdCliente(int id) {
         return membs.existeMembresiaIdCliente(id);
     }
-    
-    public boolean isMembresiaVigente(String id) {       
+
+    public boolean isMembresiaVigente(String id) {
         LocalDate hoy = LocalDate.now();
         ModeloMembresia ms = (ModeloMembresia) membs.get(id);
-        
+
         if (ms == null) {
             System.out.println("No existe una membresia con ese id");
             return false;
@@ -60,7 +73,7 @@ public class NegocioMembresia {
             System.out.println("La membresia es vigente");
             return true;
         }
-        
+
         System.out.println("La membresía no es vigente");
         return false;
     }
