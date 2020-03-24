@@ -195,6 +195,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
                 registrarMembresia();
                 break;
             case "renovar":
+                renovarMembresia();
                 break;
             case "modificar":
                 modificarMembresia();
@@ -208,6 +209,37 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void renovarMembresia(){
+        String nombre = txfNombre.getText();
+        String direccion = txfDireccion.getText();
+        String telefono = txfTelefono.getText();
+        LocalDate hoy = LocalDate.now();
+        String anio = Integer.toString(hoy.getYear());
+        String mes = Integer.toString(hoy.getMonthValue());
+        String dia = Integer.toString(hoy.getDayOfMonth());   
+        
+        LocalDate fin = getFechaFin();
+        String tipo = comboTipo.getSelectedItem().toString();
+        int id = Integer.parseInt(txfID.getText());
+        
+        ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);      
+        ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
+        boolean exitomem = membresias.renovarFechaVenc(mem, fin);
+        
+        
+        if (!exitomem){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vea la consola para mas informacion");
+        } else {
+            JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre());
+            try{
+                main.llenarTabla();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+        }
+    }
+    
     private void modificarMembresia(){
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
@@ -273,13 +305,13 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             if (mes == 12){
                 anio++;
                 mes = 1;
-                precio = 250;
+                precio = 260;
             } else {
                 mes++;
-                precio = 250;
+                precio = 260;
             }
         } else {
-            precio = 100;
+            precio = 80;
             dia += 7;
         }
         String parse = anio+"-0"+mes+"-"+dia;

@@ -86,6 +86,7 @@ public class NegocioMembresia {
     }
     
     public boolean renovarFechaVenc(ModeloMembresia mem, LocalDate fecha) {
-        throw new UnsupportedOperationException("lol nope");
+        mem.setFechaFin(fecha);
+        return updMembresia(mem);
     }
 }
