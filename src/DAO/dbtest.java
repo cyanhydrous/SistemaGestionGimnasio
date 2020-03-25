@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Modelos.ModeloAsistencia;
 import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import Negocio.*;
@@ -32,17 +33,24 @@ public class dbtest {
      */
     public static void main(String[] args) {
 
-            //ModeloCliente mc = new ModeloCliente(387375,"Bulio Iván","444","ffffff");
-            ModeloCliente mc1 = new ModeloCliente(433257,"Memb Vigente Test", "666", "En su casa");
-            //LocalDate ld = LocalDate.parse("2018-05-10");
-            LocalDate ld = LocalDate.now();
-            LocalDate s = LocalDate.now();
-            ModeloMembresia mm = new ModeloMembresia(mc1, s, ld);
-            DAOMembresias dm = new DAOMembresias();
-            DAOClientes dc = new DAOClientes();
-            dm.agregar(mm);
-            //dm.eliminar(mm);
-            
+        //ModeloCliente mc = new ModeloCliente(387375,"Bulio Iván","444","ffffff");
+//            ModeloCliente mc1 = new ModeloCliente(433257,"Memb Vigente Test", "666", "En su casa");
+//            //LocalDate ld = LocalDate.parse("2018-05-10");
+//            LocalDate ld = LocalDate.now();
+//            LocalDate s = LocalDate.now();
+//            ModeloMembresia mm = new ModeloMembresia(mc1, s, ld);
+//            DAOMembresias dm = new DAOMembresias();
+//            DAOClientes dc = new DAOClientes();
+        //dm.agregar(mm);
+        //dm.eliminar(mm);
+        NegocioAsistencia na = new NegocioAsistencia();
+        List a = na.desplegarAsistencias();
+        
+        for (Object obj : a) {
+            ModeloAsistencia ma = (ModeloAsistencia) obj;
+            System.out.println(ma.toString());
+        } 
+
 //            System.out.println(dm.existeMembresiaIdCliente(387375));
 //            
 //        List l = dm.getAll();
@@ -51,22 +59,21 @@ public class dbtest {
 //            ModeloMembresia m = (ModeloMembresia) l1;
 //            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
 //        }
-
         NegocioMembresia nm = new NegocioMembresia();
         System.out.println(nm.isMembresiaVigente("433257"));
         
     }
-
+    
     public static void actualizarCte(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.actualizar(cte));
     }
-
+    
     public static void buscarID(String id) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.buscarID(id));
     }
-
+    
     public static int generateUniqueId() {
         UUID idOne = UUID.randomUUID();
         System.out.println("idOne: " + idOne);
@@ -79,17 +86,17 @@ public class dbtest {
         str = filterStr.replaceAll("-", "").substring(3, 9);
         return Integer.parseInt(str);
     }
-
+    
     private static void buscar(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.buscar((Object) cte));
     }
-
+    
     private static void insertar(ModeloCliente cte) {
         DAOClientes d = new DAOClientes();
         System.out.println(d.agregar((Object) cte));
     }
-
+    
     private static void getAllTest() {
         DAOClientes d = new DAOClientes();
         List list = d.getAll();
@@ -98,7 +105,7 @@ public class dbtest {
             System.out.print("Nombre: " + ct.getNombre() + ", Direccion: " + ct.getDireccion() + ", Telefono: " + ct.getTelefono() + "\n");
         }
     }
-
+    
     private static void uh() {
         ConexionMySQL c = new ConexionMySQL();
         Connection conn = c.connect();
@@ -120,5 +127,5 @@ public class dbtest {
             Logger.getLogger(dbtest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
 }

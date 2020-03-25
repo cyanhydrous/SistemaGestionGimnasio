@@ -7,6 +7,7 @@ package view;
 
 import Modelos.ModeloAsistencia;
 import Negocio.NegocioAsistencia;
+import Negocio.NegocioMembresia;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 public class MainClienteFrm extends javax.swing.JFrame {
 
     NegocioAsistencia asis = new NegocioAsistencia();
+    NegocioMembresia mems = new NegocioMembresia();
 
     /**
      * Creates new form MainClienteFrm
@@ -95,22 +97,40 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txfIdClienteKeyPressed
 
+    private boolean validarCte(String id) {
+
+        if (id.matches("[0-9]+")) {
+            boolean memVigente = mems.isMembresiaVigente(id);
+            boolean cteExiste = mems.existeMembresiaIdCliente(Integer.parseInt(id));
+            if (!cteExiste) {
+                JOptionPane.showMessageDialog(new JPanel(), "No hay una membresia con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (!memVigente) {
+                JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente no está vigente", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "El id debe contener solo números!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean registrarAsistencia() {
 
-        if (txfIdCliente.getText().matches("[0-9]+")) {
+        if (validarCte(txfIdCliente.getText())) {
             int id = Integer.parseInt(txfIdCliente.getText());
             LocalDate hoy = LocalDate.now();
             ModeloAsistencia as = new ModeloAsistencia(id, hoy);
-            
+
             boolean stat = asis.addAsistencia(as);
-            
+
             if (!stat) {
-                JOptionPane.showMessageDialog(new JPanel(), "No hay una membresia con ese ID o la membresia no está vigente","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(new JPanel(), "Error: Usted ya está registrado el día de hoy.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
             return stat;
-        } else {
-            JOptionPane.showMessageDialog(new JPanel(), "ID inválido","Error",JOptionPane.ERROR_MESSAGE);
         }
 
         return false;

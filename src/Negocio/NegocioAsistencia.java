@@ -6,9 +6,10 @@
 package Negocio;
 
 import DAO.DAOAsistencias;
+import DAO.DAOClientes;
 import Modelos.ModeloAsistencia;
+import Modelos.ModeloCliente;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,16 +20,21 @@ public class NegocioAsistencia {
 
     DAOAsistencias asis = new DAOAsistencias();
     NegocioMembresia mem = new NegocioMembresia();
+    NegocioCliente ctes = new NegocioCliente();
 
     public boolean addAsistencia(ModeloAsistencia asi) {
-        LocalDate hoy = LocalDate.now();
+        //LocalDate hoy = LocalDate.now();
         List asistencias = desplegarAsistencias();
+        //System.out.println(asi.getFecha().toString());
         if (mem.existeMembresiaIdCliente(asi.getCliente().getId())) {
             if (mem.isMembresiaVigente(Integer.toString(asi.getCliente().getId()))) {
                 for (int i = 0; i < asistencias.size(); i++) {
                     ModeloAsistencia m = (ModeloAsistencia) asistencias.get(i);
-                    if (asi.getFecha().toString().equals(m.getFecha().toString())) {
-                        System.out.println("NegocioAsistencia: Ya está registrada la asistencia");
+                    LocalDate ld = m.getFecha();
+                    int id = m.getCliente().getId();
+                    //System.out.println(m.toString());
+                    if (asi.getFecha().equals(ld) && asi.getCliente().getId() == id) {
+                        System.out.println("NegocioAsistencia: Ya está registrada la asistencia el dia de hoy");
                         return false;
                     }
                 }
@@ -48,6 +54,20 @@ public class NegocioAsistencia {
     }
 
     public List desplegarAsistencias() {
-        return asis.getAll();
+        List asistencias = asis.getAll();
+        List clientes = ctes.desplegarClientes();
+        for (int i = 0; i < asistencias.size(); i++) {
+            ModeloAsistencia as = (ModeloAsistencia) asistencias.get(i);
+            for (int j = 0; j < clientes.size(); j++) {
+                ModeloCliente cte = (ModeloCliente) clientes.get(j);
+                if (as.getCliente().getId() == cte.getId()) {
+                    as.setCte(cte);
+                }
+            }
+        }
+        
+        return asistencias;
+        
+        //return asis.getAll();
     }
 }
