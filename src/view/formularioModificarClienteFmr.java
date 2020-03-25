@@ -206,7 +206,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
                 renovarMembresia();
                 break;
             case "modificar":
-                modificarMembresia();
+                modificarCliente();
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Esta ventana no se inicializó correctamente");
@@ -254,28 +254,20 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         this.dispose();
     }
 
-    private void modificarMembresia() {
+    private void modificarCliente() {
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
         String telefono = txfTelefono.getText();
-        LocalDate hoy = LocalDate.now();
-        String anio = Integer.toString(hoy.getYear());
-        String mes = Integer.toString(hoy.getMonthValue());
-        String dia = Integer.toString(hoy.getDayOfMonth());
 
-        LocalDate fin = getFechaFin();
-        String tipo = comboTipo.getSelectedItem().toString();
         int id = Integer.parseInt(txfID.getText());
 
         ModeloCliente cte = new ModeloCliente(id, nombre, telefono, direccion);
-        ModeloMembresia mem = new ModeloMembresia(cte, hoy, fin);
         boolean exitocte = clientes.updCliente(cte);
-        boolean exitomem = membresias.updMembresia(mem);
 
-        if (!exitocte || !exitomem) {
+        if (!exitocte) {
             JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Se actualizó la membresia con el ID: " + cte.getId());
+            JOptionPane.showMessageDialog(null, "Se actualizó la información del cliente: " + cte.getId());
             try {
                 main.llenarTabla();
             } catch (Exception e) {
