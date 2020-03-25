@@ -13,6 +13,7 @@ import java.util.Date;
  * @author phant
  */
 public class ModeloMembresia {
+
     int id;
     ModeloCliente cliente;
     LocalDate fechaIn, fechaFin;
@@ -21,10 +22,10 @@ public class ModeloMembresia {
         return id;
     }
 
-    public ModeloMembresia(){
-        
+    public ModeloMembresia() {
+
     }
-    
+
     public ModeloMembresia(int id, ModeloCliente cliente, LocalDate fechaIn, LocalDate fechaFin) {
         this.id = id;
         this.cliente = cliente;
@@ -36,10 +37,17 @@ public class ModeloMembresia {
         this.id = id;
         this.cliente = new ModeloCliente();
         this.cliente.setId(idcliente);
-        this.fechaIn = LocalDate.parse(fechaIn);
-        this.fechaFin = LocalDate.parse(fechaFin);
+        if (fechaFin == null || fechaIn == null) {
+            System.out.println("Fecha inválida para la membresia del cliente: " + id);
+            this.fechaIn = LocalDate.parse("0000-01-01");
+            this.fechaFin = LocalDate.parse("0000-01-01");
+        } else {
+            this.fechaIn = LocalDate.parse(fechaIn);
+            this.fechaFin = LocalDate.parse(fechaFin);
+        }
+
     }
-    
+
     public ModeloMembresia(ModeloCliente cliente, LocalDate fechaIn, LocalDate fechaFin) {
         this.cliente = cliente;
         this.fechaIn = fechaIn;
@@ -78,7 +86,5 @@ public class ModeloMembresia {
     public String toString() {
         return "ModeloMembresia{" + "id=" + id + ", cliente=" + cliente + ", fechaIn=" + fechaIn + ", fechaFin=" + fechaFin + '}';
     }
-    
-    
-    
+
 }

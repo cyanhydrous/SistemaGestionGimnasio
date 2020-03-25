@@ -198,26 +198,27 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         //validarEntrada(); No funca todavía
-        switch (accion) {
-            case "registrar":
-                registrarMembresia();
-                break;
-            case "renovar":
-                renovarMembresia();
-                break;
-            case "modificar":
-                modificarCliente();
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Esta ventana no se inicializó correctamente");
-                this.dispose();
-                break;
+        if (validarEntrada()) {
+            switch (accion) {
+                case "registrar":
+                    registrarMembresia();
+                    break;
+                case "renovar":
+                    renovarMembresia();
+                    break;
+                case "modificar":
+                    modificarCliente();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Esta ventana no se inicializó correctamente");
+                    this.dispose();
+                    break;
+            }
         }
-
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void renovarMembresia() {        
+    private void renovarMembresia() {
         String nombre = txfNombre.getText();
         String direccion = txfDireccion.getText();
         String telefono = txfTelefono.getText();
@@ -237,7 +238,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             boolean exitomem = membresias.renovarFechaVenc(mem, fin);
 
             if (!exitomem) {
-                JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Se renovó la membresia de: " + cte.getNombre() + "\n El precio es de: " + precio);
                 try {
@@ -248,7 +249,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
             }
         } else {
-            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: La membresia aun está vigente","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: La membresia aun está vigente", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         this.dispose();
@@ -265,7 +266,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         boolean exitocte = clientes.updCliente(cte);
 
         if (!exitocte) {
-            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Se actualizó la información del cliente: " + cte.getId());
             try {
@@ -275,7 +276,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             }
 
         }
-        
+
         this.dispose();
     }
 
@@ -296,26 +297,26 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         boolean exitomem = membresias.addMembresia(mem);
 
         if (!exitocte || !exitomem) {
-            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() + "\n El precio es de: " + precio);
             main.llenarTabla();
         }
-        
+
         this.dispose();
     }
 
     private LocalDate getFechaFin() {
         LocalDate hoy = LocalDate.now(); //Fecha de hoy
         //260 mes, 80 semana y 20 el día
-        
+
         //Aquí se determina cuanto hay que sumarle a la fecha de hoy
         if (comboTipo.getSelectedItem().toString().equals("Mensual")) {
-            LocalDate fin = hoy.plusMonths(1); 
+            LocalDate fin = hoy.plusMonths(1);
             precio = 260;
             return fin;
-        } else if(comboTipo.getSelectedItem().toString().equals("Semanal")){
-            LocalDate fin = hoy.plusWeeks(1); 
+        } else if (comboTipo.getSelectedItem().toString().equals("Semanal")) {
+            LocalDate fin = hoy.plusWeeks(1);
             precio = 80;
             return fin;
         } else {
@@ -345,21 +346,35 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
     private boolean validarEntrada() {
 
-        if (!txfNombre.getText().matches("[a-zA-Z\\s]+")) {
-            System.out.println("Nombre invalido");
-            return false;
-        } else if (!txfDireccion.getText().matches("[a-zA-Z\\s]+")) {
-            System.out.println("Dirección invalida");
-            return false;
-        } else if (!txfTelefono.getText().matches("[0-9]")) {
-            System.out.println("El telefono no puede contener caracteres que no sean numeros");
-            return false;
-        } else if (txfTelefono.getText().length() != 10) {
-            System.out.println("El telefono debe tener 10 digitos");
+        if (!txfNombre.getText().equals("") && !txfTelefono.getText().equals("") && !txfDireccion.getText().equals("")) {
+            if (!txfNombre.getText().matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
+                JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Nombre invalido");
+                return false;
+            } else if (txfNombre.getText().length() > 45) {
+                JOptionPane.showMessageDialog(new JPanel(), "El nombre excedió el límite de caracteres (45)", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (txfDireccion.getText().length() > 50) {
+                JOptionPane.showMessageDialog(new JPanel(), "La dirección excedió el límite de caracteres (50)", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (!txfDireccion.getText().matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ#-]{1,50}")) {
+                JOptionPane.showMessageDialog(new JPanel(), "La dirección contiene caracteres inválidos", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (!txfTelefono.getText().matches("[0-9]+")) {
+                JOptionPane.showMessageDialog(new JPanel(), "El número de telefono contiene caracteres no válidos", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("El telefono no puede contener caracteres que no sean numeros");
+                return false;
+            } else if (txfTelefono.getText().length() != 10) {
+                JOptionPane.showMessageDialog(new JPanel(), "El número de telefono debe ser de 10 números", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("El telefono debe tener 10 digitos");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Al menos un campo está vacío, favor de llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        System.out.println("OK");
+        //System.out.println("OK");
         return true;
     }
 
