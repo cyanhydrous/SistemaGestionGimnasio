@@ -54,6 +54,11 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         labelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/steelFactoryGym.jpg"))); // NOI18N
 
@@ -177,6 +182,10 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         rellenarTabla(membs.desplegarMembresias());
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+    }//GEN-LAST:event_formKeyPressed
 
     public void llenarTabla(){
         rellenarTabla(membs.desplegarMembresias());

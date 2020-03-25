@@ -122,7 +122,12 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
 
         jLabel6.setText("Tipo de Membresia");
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semanal", "Mensual" }));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semanal", "Mensual", "Dia" }));
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTipoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +251,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JPanel(), "No se pudo renovar: La membresia aun está vigente","Error",JOptionPane.ERROR_MESSAGE);
         }
 
+        this.dispose();
     }
 
     private void modificarMembresia() {
@@ -277,6 +283,8 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             }
 
         }
+        
+        this.dispose();
     }
 
     private void registrarMembresia() {
@@ -301,34 +309,37 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Se registró la membresia con el ID: " + cte.getId() + "\n El precio es de: " + precio);
             main.llenarTabla();
         }
+        
+        this.dispose();
     }
 
     private LocalDate getFechaFin() {
-        LocalDate hoy = LocalDate.now();
-        int anio = hoy.getYear();
-        int mes = hoy.getMonthValue();
-        int dia = hoy.getDayOfMonth();
-
+        LocalDate hoy = LocalDate.now(); //Fecha de hoy
+        //260 mes, 80 semana y 20 el día
+        
+        //Aquí se determina cuanto hay que sumarle a la fecha de hoy
         if (comboTipo.getSelectedItem().toString().equals("Mensual")) {
-            if (mes == 12) {
-                anio++;
-                mes = 1;
-                precio = 260;
-            } else {
-                mes++;
-                precio = 260;
-            }
-        } else {
+            LocalDate fin = hoy.plusMonths(1); 
+            precio = 260;
+            return fin;
+        } else if(comboTipo.getSelectedItem().toString().equals("Semanal")){
+            LocalDate fin = hoy.plusWeeks(1); 
             precio = 80;
-            dia += 7;
+            return fin;
+        } else {
+            LocalDate fin = hoy.plusDays(1);
+            precio = 20;
+            return fin;
         }
-        String parse = anio + "-0" + mes + "-" + dia;
-        return LocalDate.parse(parse);
     }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTipoActionPerformed
 
     public int generateUniqueId() {
         UUID idOne = UUID.randomUUID();
