@@ -33,12 +33,13 @@ public class solicitaId extends javax.swing.JFrame {
         initComponents();
         this.Accion = accion;
         this.setLocationRelativeTo(null);
-
+        this.setResizable(false);
     }
 
     public solicitaId() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**

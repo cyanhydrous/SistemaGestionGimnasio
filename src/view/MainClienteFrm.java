@@ -30,6 +30,7 @@ public class MainClienteFrm extends javax.swing.JFrame {
     public MainClienteFrm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**

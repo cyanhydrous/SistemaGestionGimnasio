@@ -26,6 +26,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         initComponents();
         this.setTitle("STEEL FACTORY GYM SISTEMA DE GESTION");
         this.setLocationRelativeTo(null);
+        //this.setResizable(false);
         vaciarTabla();
         rellenarTabla(membs.desplegarMembresias());
     }
@@ -93,6 +94,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         jMenu1.setText("Membresia");
 
+        objMenuRegistrarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         objMenuRegistrarMembresia.setText("Registrar Nueva Membresia");
         objMenuRegistrarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +104,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jMenu1.add(objMenuRegistrarMembresia);
         jMenu1.add(jSeparator1);
 
+        objMenuModificarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
         objMenuModificarMembresia.setText("Modificar Membresia");
         objMenuModificarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +114,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jMenu1.add(objMenuModificarMembresia);
         jMenu1.add(jSeparator2);
 
+        objMenuRenovarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         objMenuRenovarMembresia.setText("Renovar Membresia");
         objMenuRenovarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +125,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("?");
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -132,8 +136,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar)))
