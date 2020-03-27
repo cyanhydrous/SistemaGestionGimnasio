@@ -270,23 +270,36 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
+
         if (evt.getSource() == tabla) {
             switch (evt.getKeyCode()) {
                 case KeyEvent.VK_R:
-                    if (!membs.isMembresiaVigente(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())) {
-                        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", this);
-                        llenarFormulario(modificar, "Renovar");
+                    if (tabla.getSelectedRow() != -1) {
+                        if (!membs.isMembresiaVigente(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())) {
+                            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", this);
+                            llenarFormulario(modificar, "Renovar");
+                        } else {
+                            JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente todavía está vigente, no se puede renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente todavía está vigente, no se puede renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia a renovar!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+
                     break;
+                    
                 case KeyEvent.VK_M:
-                    formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(this);
-                    modificar.comboTipo.setEnabled(false);
-                    llenarFormulario(modificar,"");
+                    if (tabla.getSelectedRow() != -1) {
+                        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(this);
+                        modificar.comboTipo.setEnabled(false);
+                        llenarFormulario(modificar, "");
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
                     break;
             }
         }
+
     }//GEN-LAST:event_tablaKeyPressed
 
     private void llenarFormulario(formularioModificarClienteFmr modificar, String Accion) {
