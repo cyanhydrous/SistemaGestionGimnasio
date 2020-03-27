@@ -41,8 +41,19 @@ public class NegocioCliente {
         return false;
     }
     
-    public ModeloCliente buscarCliente(String cte) {
-        throw new UnsupportedOperationException("???");
+    public ModeloCliente obtenerCliente(String id) {
+        List clientes = desplegarClientes();
+        if (validarCliente(id)) {
+            for (Object obj : clientes) {
+                ModeloCliente res = (ModeloCliente) obj;
+                if (res.getId() == Integer.parseInt(id)) {
+                    return res;
+                }
+            }
+        } else {
+            System.out.println("NegocioCliente: No se encontró ese cliente!");
+        }
+        return null;
     }
     
     public List desplegarClientes() {
