@@ -9,11 +9,16 @@ import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import static view.formularioModificarClienteFmr.main;
 
 /**
  *
@@ -32,7 +37,6 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         this.setTitle("STEEL FACTORY GYM SISTEMA DE GESTION");
         this.setLocationRelativeTo(null);
         //this.setResizable(false);
-        vaciarTabla();
         rellenarTabla(membs.desplegarMembresias());
         crearEventoTabla();
     }
@@ -99,6 +103,11 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tablaKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         btnActualizar.setText("Actualizar");
@@ -125,6 +134,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         txtDireccion.setColumns(20);
         txtDireccion.setLineWrap(true);
         txtDireccion.setRows(5);
+        txtDireccion.setWrapStyleWord(true);
         txtDireccion.setAutoscrolls(false);
         jScrollPane2.setViewportView(txtDireccion);
 
@@ -159,7 +169,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 .addComponent(lblTelefono)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -217,18 +227,19 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnActualizar)
-                        .addGap(29, 29, 29)
-                        .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -258,14 +269,50 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formKeyPressed
 
+    private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
+        if (evt.getSource() == tabla) {
+            switch (evt.getKeyCode()) {
+                case KeyEvent.VK_R:
+                    if (!membs.isMembresiaVigente(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())) {
+                        formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", this);
+                        llenarFormulario(modificar, "Renovar");
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente todavía está vigente, no se puede renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case KeyEvent.VK_M:
+                    formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(this);
+                    modificar.comboTipo.setEnabled(false);
+                    llenarFormulario(modificar,"");
+                    break;
+            }
+        }
+    }//GEN-LAST:event_tablaKeyPressed
+
+    private void llenarFormulario(formularioModificarClienteFmr modificar, String Accion) {
+        ModeloMembresia mem = membs.obtenerMembresia(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+        modificar.txfNombre.setText(mem.getCliente().getNombre());
+        modificar.txfDireccion.setText(mem.getCliente().getDireccion());
+        modificar.txfTelefono.setText(mem.getCliente().getTelefono());
+        modificar.txfID.setText(Integer.toString(mem.getCliente().getId()));
+
+        if ("Renovar".equals(Accion)) {
+            modificar.txfNombre.setEnabled(false);
+            modificar.txfID.setEnabled(false);
+            modificar.txfDireccion.setEnabled(false);
+            modificar.txfTelefono.setEnabled(false);
+        }
+        modificar.setVisible(true);
+    }
+
     public void llenarTabla() {
         rellenarTabla(membs.desplegarMembresias());
     }
 
-    public void actualizarLista(){
-        
+    public void actualizarLista() {
+
     }
-    
+
     private void crearEventoTabla() {
         tabla.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             panelInfo.setVisible(true);
@@ -276,7 +323,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 lblNombre.setText(cte.getNombre());
                 lblTelefono.setText(cte.getTelefono());
                 txtDireccion.setText(cte.getDireccion());
-            } else {
+            } else if (tabla.getSelectedRow() == -1) {
                 panelInfo.setVisible(false);
             }
 
@@ -358,4 +405,5 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     public javax.swing.JTable tabla;
     private javax.swing.JTextArea txtDireccion;
     // End of variables declaration//GEN-END:variables
+
 }
