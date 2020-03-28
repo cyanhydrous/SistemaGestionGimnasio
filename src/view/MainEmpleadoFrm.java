@@ -322,17 +322,31 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (tabla.getSelectedRow() != -1) {
-            boolean stat = membs.delMembresia(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
-            if (!stat) {
-                JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
-            }
+            eliminarMembresia();
         } else {
             JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        llenarTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void eliminarMembresia() {
+        String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
+
+        if (!membs.isMembresiaVigente(id)) {
+            int input = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la membresía?\n¡Esto no se podrá deshacer!");
+            if (input == 0) {
+                boolean stat = membs.delMembresia(id);
+                if (!stat) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
+                }
+                llenarTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n La membresía aún está vigente!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
 
     private void llenarFormulario(formularioModificarClienteFmr modificar, String Accion) {
         ModeloMembresia mem = membs.obtenerMembresia(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
