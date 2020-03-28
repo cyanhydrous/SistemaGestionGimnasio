@@ -9,14 +9,19 @@ import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import static view.formularioModificarClienteFmr.main;
 
@@ -62,6 +67,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDireccion = new javax.swing.JTextArea();
+        btnEliminar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         objMenuRegistrarMembresia = new javax.swing.JMenuItem();
@@ -174,6 +180,13 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Membresia");
 
         objMenuRegistrarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -222,7 +235,10 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnActualizar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar))
                     .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -232,7 +248,9 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(btnActualizar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnEliminar))
                         .addGap(18, 18, 18)
                         .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -286,7 +304,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                     }
 
                     break;
-                    
+
                 case KeyEvent.VK_M:
                     if (tabla.getSelectedRow() != -1) {
                         formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(this);
@@ -295,12 +313,26 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    
+
                     break;
             }
         }
 
     }//GEN-LAST:event_tablaKeyPressed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (tabla.getSelectedRow() != -1) {
+            boolean stat = membs.delMembresia(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+            if (!stat) {
+                JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        llenarTabla();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void llenarFormulario(formularioModificarClienteFmr modificar, String Accion) {
         ModeloMembresia mem = membs.obtenerMembresia(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
@@ -398,6 +430,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

@@ -27,7 +27,7 @@ public class NegocioCliente {
     }
     
     public boolean delCliente(ModeloCliente cte) {
-        throw new UnsupportedOperationException("No se si se va a implementar la eliminacion de clientes...");
+        return ctes.eliminar(cte);
     }
     
     public boolean updCliente(ModeloCliente cte) {

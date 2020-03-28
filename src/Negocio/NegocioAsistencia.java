@@ -19,11 +19,12 @@ import java.util.List;
 public class NegocioAsistencia {
 
     DAOAsistencias asis = new DAOAsistencias();
-    NegocioMembresia mem = new NegocioMembresia();
+    
     NegocioCliente ctes = new NegocioCliente();
 
     public boolean addAsistencia(ModeloAsistencia asi) {
         //LocalDate hoy = LocalDate.now();
+        NegocioMembresia mem = new NegocioMembresia();
         List asistencias = desplegarAsistencias();
         //System.out.println(asi.getFecha().toString());
         if (mem.existeMembresiaIdCliente(asi.getCliente().getId())) {
@@ -49,10 +50,26 @@ public class NegocioAsistencia {
         return false;
     }
 
-    public boolean delAsistencia(ModeloAsistencia asi) {
-        throw new UnsupportedOperationException("lol nope");
+    public boolean delAsistencias(String id) {
+        ModeloAsistencia as = obtenerAsistencia(id);
+        if (as != null) {
+            return asis.eliminar(as);
+        }
+        System.out.println("NegocioAsistencia: No hay niguna asistencia con ese cliente");
+        return false;
     }
 
+    public ModeloAsistencia obtenerAsistencia(String id){
+        List as = desplegarAsistencias();
+        for (int i = 0; i < as.size(); i++) {
+            ModeloAsistencia mm = (ModeloAsistencia) as.get(i);
+            if (Integer.toString(mm.getCliente().getId()).equals(id)){
+                return mm;
+            }
+        }
+        return null;
+    }
+    
     public List desplegarAsistencias() {
         List asistencias = asis.getAll();
         List clientes = ctes.desplegarClientes();

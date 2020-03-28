@@ -58,7 +58,21 @@ public class DAOClientes implements IDAO {
 
     @Override
     public boolean eliminar(Object obj) {
-        throw new UnsupportedOperationException("No se tiene en cuenta la eliminacion de clientes aun"); //To change body of generated methods, choose Tools | Templates.
+        ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+        ModeloCliente mc = (ModeloCliente) obj;
+
+        String query = "DELETE FROM cliente WHERE idcliente=" + mc.getId() + ";";
+
+        try {
+            Statement s = conn.createStatement();
+            s.execute(query);
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override

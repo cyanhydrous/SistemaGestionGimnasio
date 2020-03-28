@@ -5,7 +5,6 @@
  */
 package Negocio;
 
-import DAO.DAOClientes;
 import DAO.DAOMembresias;
 import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
@@ -18,8 +17,13 @@ import java.util.List;
  */
 public class NegocioMembresia {
     
+    
     DAOMembresias membs = new DAOMembresias();
-    DAOClientes ctes = new DAOClientes();
+    NegocioCliente ctes = new NegocioCliente();    
+    
+    public NegocioMembresia(){
+        
+    }
     
     public boolean addMembresia(ModeloMembresia mem) {
         return membs.agregar(mem);
@@ -27,7 +31,14 @@ public class NegocioMembresia {
 
     //Hay que ver si se va ocupar en el futuro
     public boolean delMembresia(ModeloMembresia mem) {
-        return membs.eliminar(mem);
+        return membs.eliminar(mem) && ctes.delCliente(mem.getCliente());
+    }
+    
+    public boolean delMembresia(String id) {
+        NegocioAsistencia asis = new NegocioAsistencia();
+        ModeloMembresia mem = obtenerMembresia(id);
+        asis.delAsistencias(id);
+        return membs.eliminar(mem) && ctes.delCliente(mem.getCliente());
     }
     
     public boolean updMembresia(ModeloMembresia mem) {
@@ -51,7 +62,7 @@ public class NegocioMembresia {
     
     public List desplegarMembresias() {
         List membresias = membs.getAll();
-        List clientes = ctes.getAll();
+        List clientes = ctes.desplegarClientes();
         for (int i = 0; i < membresias.size(); i++) {
             ModeloMembresia mem = (ModeloMembresia) membresias.get(i);
             for (int j = 0; j < clientes.size(); j++) {
