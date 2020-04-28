@@ -61,9 +61,12 @@ public class dbtest {
 //        System.out.println(nm.isMembresiaVigente("433257"));
 
             DAOProductos dp = new DAOProductos();
-            ModeloProducto mp = new ModeloProducto("Multivitaminico ario xd",50,350.0);
-            System.out.println(dp.agregar(mp));
-        
+            //ModeloProducto mp = new ModeloProducto("Multivitaminico ario xd",50,350.0);
+            //System.out.println(dp.agregar(mp));
+        for (Object obj : dp.getAll()) {
+            ModeloProducto m = (ModeloProducto) obj;
+            System.out.println(m.getNombre());
+        } 
     }
     
     public static void actualizarCte(ModeloCliente cte) {

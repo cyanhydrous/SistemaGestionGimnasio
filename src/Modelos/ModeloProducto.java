@@ -62,8 +62,10 @@ public class ModeloProducto {
         this.cantidad = cantidad;
         this.precio = precio;
     }
-    
-    
-    
-    
+
+    public ModeloProducto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = 0;
+    }
 }
