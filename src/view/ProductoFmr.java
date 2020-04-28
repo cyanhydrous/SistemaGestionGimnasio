@@ -6,12 +6,16 @@
 package view;
 
 import Modelos.ModeloProducto;
+import Modelos.ModeloVenta;
 import Negocio.NegocioProducto;
 import Negocio.NegocioVenta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -37,7 +41,7 @@ public class ProductoFmr extends javax.swing.JFrame {
             labelCampoTexto.setText("Precio :");
             botonRealizarAccion.setText("Vender");
             cantidadOPreciotxt.setEditable(false);
-            crearEventoCombo();            
+            crearEventoCombo();
         } else if (accion == "Inventariar Productos") {
             this.setTitle("Inventariar Productos");
             LabelTitulo.setText("Inventariar Productos");
@@ -145,9 +149,30 @@ public class ProductoFmr extends javax.swing.JFrame {
 
     private void botonRealizarAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarAccionActionPerformed
         if (accion.equals("Venta Productos")) {
-            
+            List productos = np.desplegarProductos();
+            ModeloVenta venta;
+            String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
+            for (int i = 0; i < productos.size(); i++) {
+                ModeloProducto prod = (ModeloProducto) productos.get(i);
+                if (prod.getNombre().equals(nombre)) {
+                    venta = new ModeloVenta();
+                    venta.setProducto(prod);
+                    venta.setFechaventa(LocalDate.now());
+                    if (realizarVenta(venta)) {
+                        JOptionPane.showMessageDialog(null, "Se registró la venta \n El precio es de: " + prod.getPrecio());
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar la venta: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                }
+            }
+
         }
     }//GEN-LAST:event_botonRealizarAccionActionPerformed
+
+    private boolean realizarVenta(ModeloVenta venta) {
+        return nv.addVenta(venta);
+    }
 
     /**
      * @param args the command line arguments
@@ -205,7 +230,7 @@ public class ProductoFmr extends javax.swing.JFrame {
                 cantidadOPreciotxt.setText("" + prod.getPrecio());
                 break;
             }
-        }        
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

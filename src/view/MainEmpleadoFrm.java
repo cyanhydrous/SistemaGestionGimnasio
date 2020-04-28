@@ -186,7 +186,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                 .addComponent(lblTelefono)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -252,6 +252,11 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         menuProductos.add(jSeparator4);
 
         objMenuRegistroProductos.setText("Registrar Productos");
+        objMenuRegistroProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuRegistroProductosActionPerformed(evt);
+            }
+        });
         menuProductos.add(objMenuRegistroProductos);
 
         jMenuBar1.add(menuProductos);
@@ -419,6 +424,12 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         ProductoFmr p = new ProductoFmr("Inventariar Productos");
         p.setVisible(true);
     }//GEN-LAST:event_objMenuInventarioActionPerformed
+
+    private void objMenuRegistroProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistroProductosActionPerformed
+        // TODO add your handling code here:
+        RegistrarProducto rp = new RegistrarProducto();
+        rp.setVisible(true);
+    }//GEN-LAST:event_objMenuRegistroProductosActionPerformed
 
     private void eliminarMembresia() {
         String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
