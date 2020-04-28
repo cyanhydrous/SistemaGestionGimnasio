@@ -25,6 +25,13 @@ public class ModeloVenta {
         this.fechaventa = fechaventa;
     }
 
+    public ModeloVenta(String idventa, LocalDate fechaventa, String idproducto) {
+        this.idventa = idventa;
+        producto = new ModeloProducto();
+        producto.setIdproducto(idproducto);
+        this.fechaventa = fechaventa;
+    }
+
     public String getIdventa() {
         return idventa;
     }

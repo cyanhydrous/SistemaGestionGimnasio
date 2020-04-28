@@ -5,39 +5,64 @@
  */
 package view;
 
+import Modelos.ModeloProducto;
+import Negocio.NegocioProducto;
+import Negocio.NegocioVenta;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author joshua
  */
 public class ProductoFmr extends javax.swing.JFrame {
-    String accion= "Venta Productos";
+
+    String accion = "Venta Productos";
+    NegocioVenta nv = new NegocioVenta();
+    NegocioProducto np = new NegocioProducto();
+
     /**
      * Creates new form ProductoFmr
      */
     public ProductoFmr(String accion) {
-        this.accion= accion;
+        this.accion = accion;
         initComponents();
         this.setLocationRelativeTo(null);
-        if(accion=="Venta Productos"){
+        if (accion == "Venta Productos") {
             this.setTitle("Venta de Productos");
             LabelTitulo.setText("Venta de Productos");
             LabelProducto.setText("Producto a Vender");
             labelCampoTexto.setText("Precio :");
             botonRealizarAccion.setText("Vender");
             cantidadOPreciotxt.setEditable(false);
-        }else if(accion == "Inventariar Productos"){
+            crearEventoCombo();            
+        } else if (accion == "Inventariar Productos") {
             this.setTitle("Inventariar Productos");
             LabelTitulo.setText("Inventariar Productos");
             LabelProducto.setText("Producto a Inventariar");
             cantidadOPreciotxt.setText("cantidad a Inventariar:");
             botonRealizarAccion.setText("Inventariar");
         }
+
+        llenarCombo();
     }
+
     public ProductoFmr() {
         initComponents();
         this.setTitle("Venta Productos");
         this.setLocationRelativeTo(null);
     }
+
+    private void crearEventoCombo() {
+        comboProducto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ponerPrecio();
+            }
+        });
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,6 +88,11 @@ public class ProductoFmr extends javax.swing.JFrame {
         comboProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         botonRealizarAccion.setText("Vender");
+        botonRealizarAccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRealizarAccionActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -113,6 +143,12 @@ public class ProductoFmr extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonRealizarAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarAccionActionPerformed
+        if (accion.equals("Venta Productos")) {
+            
+        }
+    }//GEN-LAST:event_botonRealizarAccionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -146,6 +182,30 @@ public class ProductoFmr extends javax.swing.JFrame {
                 new ProductoFmr().setVisible(true);
             }
         });
+    }
+
+    private void llenarCombo() {
+        List productos = np.desplegarProductos();
+        DefaultComboBoxModel dml = new DefaultComboBoxModel();
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            dml.addElement(prod.getNombre());
+        }
+        comboProducto.setModel(dml);
+        ponerPrecio();
+    }
+
+    private void ponerPrecio() {
+        String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
+        List productos = np.desplegarProductos();
+
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            if (prod.getNombre().equals(nombre)) {
+                cantidadOPreciotxt.setText("" + prod.getPrecio());
+                break;
+            }
+        }        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
