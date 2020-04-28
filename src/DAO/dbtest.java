@@ -5,10 +5,8 @@
  */
 package DAO;
 
-import Modelos.ModeloAsistencia;
-import Modelos.ModeloCliente;
-import Modelos.ModeloMembresia;
 import Negocio.*;
+import Modelos.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,13 +41,13 @@ public class dbtest {
 //            DAOClientes dc = new DAOClientes();
         //dm.agregar(mm);
         //dm.eliminar(mm);
-        NegocioAsistencia na = new NegocioAsistencia();
-        List a = na.desplegarAsistencias();
-        
-        for (Object obj : a) {
-            ModeloAsistencia ma = (ModeloAsistencia) obj;
-            System.out.println(ma.toString());
-        } 
+//        NegocioAsistencia na = new NegocioAsistencia();
+//        List a = na.desplegarAsistencias();
+//        
+//        for (Object obj : a) {
+//            ModeloAsistencia ma = (ModeloAsistencia) obj;
+//            System.out.println(ma.toString());
+//        } 
 
 //            System.out.println(dm.existeMembresiaIdCliente(387375));
 //            
@@ -58,9 +56,13 @@ public class dbtest {
 //        for (Object l1 : l) {
 //            ModeloMembresia m = (ModeloMembresia) l1;
 //            System.out.println("id: " + m.getId() + " fechaIn: " + m.getFechaIn().toString() + " fechaFin: " + m.getFechaFin() + " cliente: " + m.getCliente().getId());
-//        }
-        NegocioMembresia nm = new NegocioMembresia();
-        System.out.println(nm.isMembresiaVigente("433257"));
+////        }
+//        NegocioMembresia nm = new NegocioMembresia();
+//        System.out.println(nm.isMembresiaVigente("433257"));
+
+            DAOProductos dp = new DAOProductos();
+            ModeloProducto mp = new ModeloProducto("Multivitaminico ario xd",50,350.0);
+            System.out.println(dp.agregar(mp));
         
     }
     

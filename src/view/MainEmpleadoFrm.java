@@ -75,7 +75,18 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         objMenuModificarMembresia = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         objMenuRenovarMembresia = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuProductos = new javax.swing.JMenu();
+        objMenuVentaProducto = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        objMenuInventario = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        objMenuRegistroProductos = new javax.swing.JMenuItem();
+        menuReporteVentas = new javax.swing.JMenu();
+        objMenuReporteVentas = new javax.swing.JMenuItem();
+        MenuEquipo = new javax.swing.JMenu();
+        objMenuRegistrarEquipo = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        objMenuMantenimiento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -220,8 +231,63 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("?");
-        jMenuBar1.add(jMenu2);
+        menuProductos.setText("Productos");
+
+        objMenuVentaProducto.setText("Vender Productos");
+        objMenuVentaProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuVentaProductoActionPerformed(evt);
+            }
+        });
+        menuProductos.add(objMenuVentaProducto);
+        menuProductos.add(jSeparator3);
+
+        objMenuInventario.setText("Inventariar Productos");
+        objMenuInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuInventarioActionPerformed(evt);
+            }
+        });
+        menuProductos.add(objMenuInventario);
+        menuProductos.add(jSeparator4);
+
+        objMenuRegistroProductos.setText("Registrar Productos");
+        menuProductos.add(objMenuRegistroProductos);
+
+        jMenuBar1.add(menuProductos);
+
+        menuReporteVentas.setText("Reporte de Ventas");
+
+        objMenuReporteVentas.setText("Generar Reporte de Ventas");
+        objMenuReporteVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuReporteVentasActionPerformed(evt);
+            }
+        });
+        menuReporteVentas.add(objMenuReporteVentas);
+
+        jMenuBar1.add(menuReporteVentas);
+
+        MenuEquipo.setText("Equipo");
+
+        objMenuRegistrarEquipo.setText("Registrar Equipo");
+        objMenuRegistrarEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuRegistrarEquipoActionPerformed(evt);
+            }
+        });
+        MenuEquipo.add(objMenuRegistrarEquipo);
+        MenuEquipo.add(jSeparator5);
+
+        objMenuMantenimiento.setText("Registrar Mantenimiento de Equipo");
+        objMenuMantenimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objMenuMantenimientoActionPerformed(evt);
+            }
+        });
+        MenuEquipo.add(objMenuMantenimiento);
+
+        jMenuBar1.add(MenuEquipo);
 
         setJMenuBar(jMenuBar1);
 
@@ -327,6 +393,32 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void objMenuMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuMantenimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_objMenuMantenimientoActionPerformed
+
+    private void objMenuRegistrarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarEquipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_objMenuRegistrarEquipoActionPerformed
+
+    private void objMenuReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuReporteVentasActionPerformed
+        // TODO add your handling code here:
+        PeriodoFmr p  = new PeriodoFmr();
+        p.setVisible(true);
+    }//GEN-LAST:event_objMenuReporteVentasActionPerformed
+
+    private void objMenuVentaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuVentaProductoActionPerformed
+        // TODO add your handling code here:
+        ProductoFmr p = new ProductoFmr("Venta Productos");
+        p.setVisible(true);
+    }//GEN-LAST:event_objMenuVentaProductoActionPerformed
+
+    private void objMenuInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuInventarioActionPerformed
+        // TODO add your handling code here:
+        ProductoFmr p = new ProductoFmr("Inventariar Productos");
+        p.setVisible(true);
+    }//GEN-LAST:event_objMenuInventarioActionPerformed
 
     private void eliminarMembresia() {
         String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
@@ -443,24 +535,35 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuEquipo;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JMenu menuProductos;
+    private javax.swing.JMenu menuReporteVentas;
+    private javax.swing.JMenuItem objMenuInventario;
+    private javax.swing.JMenuItem objMenuMantenimiento;
     private javax.swing.JMenuItem objMenuModificarMembresia;
+    private javax.swing.JMenuItem objMenuRegistrarEquipo;
     private javax.swing.JMenuItem objMenuRegistrarMembresia;
+    private javax.swing.JMenuItem objMenuRegistroProductos;
     private javax.swing.JMenuItem objMenuRenovarMembresia;
+    private javax.swing.JMenuItem objMenuReporteVentas;
+    private javax.swing.JMenuItem objMenuVentaProducto;
     private javax.swing.JPanel panelInfo;
     public javax.swing.JTable tabla;
     private javax.swing.JTextArea txtDireccion;
