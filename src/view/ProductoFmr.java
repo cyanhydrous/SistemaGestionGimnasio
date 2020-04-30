@@ -42,15 +42,17 @@ public class ProductoFmr extends javax.swing.JFrame {
             botonRealizarAccion.setText("Vender");
             cantidadOPreciotxt.setEditable(false);
             crearEventoCombo();
+            llenarComboVenta();
         } else if (accion == "Inventariar Productos") {
             this.setTitle("Inventariar Productos");
             LabelTitulo.setText("Inventariar Productos");
             LabelProducto.setText("Producto a Inventariar");
-            cantidadOPreciotxt.setText("cantidad a Inventariar:");
+            cantidadOPreciotxt.setText("");
             botonRealizarAccion.setText("Inventariar");
+            llenarComboInv();
         }
 
-        llenarCombo();
+        
     }
 
     public ProductoFmr() {
@@ -171,6 +173,8 @@ public class ProductoFmr extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRealizarAccionActionPerformed
 
     private boolean realizarVenta(ModeloVenta venta) {
+
+        //boolean seVendio = np.addProducto(venta.getProducto());
         return nv.addVenta(venta);
     }
 
@@ -209,7 +213,20 @@ public class ProductoFmr extends javax.swing.JFrame {
         });
     }
 
-    private void llenarCombo() {
+    private void llenarComboVenta() {
+        List productos = np.desplegarProductos();
+        DefaultComboBoxModel dml = new DefaultComboBoxModel();
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            if (prod.getCantidad() != 0) {
+                dml.addElement(prod.getNombre());
+            }
+        }
+        comboProducto.setModel(dml);
+        ponerPrecio();
+    }
+
+    private void llenarComboInv() {
         List productos = np.desplegarProductos();
         DefaultComboBoxModel dml = new DefaultComboBoxModel();
         for (int i = 0; i < productos.size(); i++) {
@@ -217,7 +234,6 @@ public class ProductoFmr extends javax.swing.JFrame {
             dml.addElement(prod.getNombre());
         }
         comboProducto.setModel(dml);
-        ponerPrecio();
     }
 
     private void ponerPrecio() {

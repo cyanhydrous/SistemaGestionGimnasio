@@ -8,34 +8,65 @@ package view;
 import Modelos.ModeloProducto;
 import Negocio.NegocioProducto;
 import java.util.UUID;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author k3vin
  */
 public class RegistrarProducto extends javax.swing.JFrame {
+
     NegocioProducto productos = new NegocioProducto();
+
     /**
      * Creates new form RegistrarProducto
      */
     public RegistrarProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
-    
-    
+
     private void registrarProducto() {
+        if (validarEntrada()) {
+            String nombre = campoTextoNombre.getText();
+            String precio = campoTextoPrecio.getText();
+            String cantidad = campoTextoCantidad.getText();
+            String categoria = comboBoxCategorias.getSelectedItem().toString();
+            ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio));
+            if (productos.addProducto(prod)) {
+                JOptionPane.showMessageDialog(new JPanel(), "Se registró el producto correctamente");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
+            }           
+            
+        }        
+    }
+
+    private boolean validarEntrada() {
         String nombre = campoTextoNombre.getText();
         String precio = campoTextoPrecio.getText();
         String cantidad = campoTextoCantidad.getText();
-        String categoria = comboBoxCategorias.getSelectedItem().toString();
-        ModeloProducto prod = new ModeloProducto(generateUniqueId(), nombre, Integer.parseInt(cantidad), Double.parseDouble(precio));
-        productos.addProducto(prod);
+        //String categoria = comboBoxCategorias.getSelectedItem().toString();
+        if (!nombre.matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
+            JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (nombre.length() > 45) {
+            JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n Excede 45 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (!cantidad.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(new JPanel(), "Cantidad inválida", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (!precio.matches("[+-]?[0-9]+(\\\\.[0-9]+)?([Ee][+-]?[0-9]+)?")) {
+            JOptionPane.showMessageDialog(new JPanel(), "Precio inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
-        
-
-        this.dispose();
+        return true;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +91,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Steel Factory Gym");
@@ -179,7 +210,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-    
+
     public String generateUniqueId() {
         UUID idOne = UUID.randomUUID();
         String str = "" + idOne;
@@ -189,7 +220,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         str = filterStr.replaceAll("-", "").substring(3, 9);
         return str;
     }
-    
+
     /**
      * @param args the command line arguments
      */
