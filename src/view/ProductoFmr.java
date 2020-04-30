@@ -155,24 +155,38 @@ public class ProductoFmr extends javax.swing.JFrame {
 
     private void botonRealizarAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarAccionActionPerformed
         if (accion.equals("Venta Productos")) {
-            List productos = np.desplegarProductos();
-            ModeloVenta venta;
-            String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
-            for (int i = 0; i < productos.size(); i++) {
-                ModeloProducto prod = (ModeloProducto) productos.get(i);
-                if (prod.getNombre().equals(nombre)) {
-                    venta = new ModeloVenta();
-                    venta.setProducto(prod);
-                    venta.setFechaventa(LocalDate.now());
-                    if (realizarVenta(venta)) {
-                        this.dispose();
-                    }
-                    break;
-                }
+            ModeloVenta venta = obtenerVentaDelCombobox();
+            if (realizarVenta(venta)) {
+                this.dispose();
             }
 
+        } else {
+            ModeloVenta venta = obtenerVentaDelCombobox();
+            int cantidad = Integer.parseInt(cantidadOPreciotxt.getText());
+            if (np.inventariarProducto(venta.getProducto(), cantidad)) {
+                JOptionPane.showMessageDialog(null, "Inventariado completado!");
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar el inventario: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botonRealizarAccionActionPerformed
+
+    private ModeloVenta obtenerVentaDelCombobox() {
+        List productos = np.desplegarProductos();
+        ModeloVenta venta;
+        String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            if (prod.getNombre().equals(nombre)) {
+                venta = new ModeloVenta();
+                venta.setProducto(prod);
+                venta.setFechaventa(LocalDate.now());
+
+                return venta;
+            }
+        }
+        return null;
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();

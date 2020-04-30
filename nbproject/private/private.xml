@@ -4,10 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/ProductoFmr.java</file>
-            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Modelos/ModeloProducto.java</file>
-            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Modelos/ModeloMembresia.java</file>
-            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/RegistrarProducto.java</file>
-            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/formularioModificarClienteFmr.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Negocio/NegocioProducto.java</file>
         </group>
     </open-files>
 </project-private>
