@@ -52,7 +52,6 @@ public class ProductoFmr extends javax.swing.JFrame {
             llenarComboInv();
         }
 
-        
     }
 
     public ProductoFmr() {
@@ -101,6 +100,11 @@ public class ProductoFmr extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,9 +165,7 @@ public class ProductoFmr extends javax.swing.JFrame {
                     venta.setProducto(prod);
                     venta.setFechaventa(LocalDate.now());
                     if (realizarVenta(venta)) {
-                        JOptionPane.showMessageDialog(null, "Se registró la venta \n El precio es de: " + prod.getPrecio());
-                    } else {
-                        JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar la venta: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+                        this.dispose();
                     }
                     break;
                 }
@@ -172,10 +174,20 @@ public class ProductoFmr extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonRealizarAccionActionPerformed
 
-    private boolean realizarVenta(ModeloVenta venta) {
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-        //boolean seVendio = np.addProducto(venta.getProducto());
-        return nv.addVenta(venta);
+    private boolean realizarVenta(ModeloVenta venta) {
+        boolean inv = np.desinventariarProducto(venta.getProducto(), 1);
+        boolean regventa = nv.addVenta(venta);
+        if (regventa && inv) {
+            JOptionPane.showMessageDialog(null, "Se registró la venta \n El precio es de: " + venta.getProducto().getPrecio());
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar la venta: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
     }
 
     /**
