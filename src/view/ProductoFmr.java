@@ -161,15 +161,23 @@ public class ProductoFmr extends javax.swing.JFrame {
             }
 
         } else {
-            ModeloVenta venta = obtenerVentaDelCombobox();
-            int cantidad = Integer.parseInt(cantidadOPreciotxt.getText());
-            if (np.inventariarProducto(venta.getProducto(), cantidad)) {
-                JOptionPane.showMessageDialog(null, "Inventariado completado!");
+            if (validarCantidad()) {
+                ModeloVenta venta = obtenerVentaDelCombobox();
+                int cantidad = Integer.parseInt(cantidadOPreciotxt.getText());
+                if (np.inventariarProducto(venta.getProducto(), cantidad)) {
+                    JOptionPane.showMessageDialog(null, "Inventariado completado!");
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar el inventario: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar el inventario: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(new JPanel(), "La cantidad ingresada no es válida", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_botonRealizarAccionActionPerformed
+
+    private boolean validarCantidad() {
+        return cantidadOPreciotxt.getText().matches("[0-9]+") && Integer.parseInt(cantidadOPreciotxt.getText()) > 0;
+    }
 
     private ModeloVenta obtenerVentaDelCombobox() {
         List productos = np.desplegarProductos();
