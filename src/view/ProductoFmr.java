@@ -23,9 +23,10 @@ import javax.swing.JPanel;
  */
 public class ProductoFmr extends javax.swing.JFrame {
 
-    String accion = "Venta Productos";
-    NegocioVenta nv = new NegocioVenta();
-    NegocioProducto np = new NegocioProducto();
+    private String accion = "Venta Productos";
+    private NegocioVenta nv = new NegocioVenta();
+    private NegocioProducto np = new NegocioProducto();
+    public boolean noserequiere = false;
 
     /**
      * Creates new form ProductoFmr
@@ -42,7 +43,9 @@ public class ProductoFmr extends javax.swing.JFrame {
             botonRealizarAccion.setText("Vender");
             cantidadOPreciotxt.setEditable(false);
             crearEventoCombo();
-            llenarComboVenta();
+            if (!noserequiere) {
+                llenarComboVenta();
+            }
         } else if (accion == "Inventariar Productos") {
             this.setTitle("Inventariar Productos");
             LabelTitulo.setText("Inventariar Productos");
@@ -54,12 +57,11 @@ public class ProductoFmr extends javax.swing.JFrame {
 
     }
 
-    public ProductoFmr() {
-        initComponents();
-        this.setTitle("Venta Productos");
-        this.setLocationRelativeTo(null);
-    }
-
+//    public ProductoFmr() {
+//        initComponents();
+//        this.setTitle("Venta Productos");
+//        this.setLocationRelativeTo(null);
+//    }
     private void crearEventoCombo() {
         comboProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -215,49 +217,62 @@ public class ProductoFmr extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ProductoFmr().setVisible(true);
+//            }
+//        });
+//    }
+    public boolean llenarComboVenta() {
+        List productos = np.desplegarProductos();
+        if (!productos.isEmpty()) {
+            DefaultComboBoxModel dml = new DefaultComboBoxModel();
+            boolean hayInventario = false;
+            for (int i = 0; i < productos.size(); i++) {
+                ModeloProducto prod = (ModeloProducto) productos.get(i);
+                if (prod.getCantidad() != 0) {
+                    dml.addElement(prod.getNombre());
+                    hayInventario = true;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProductoFmr.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProductoFmr().setVisible(true);
+            if (hayInventario) {
+                comboProducto.setModel(dml);
+                ponerPrecio();
+            } else {                
+                return false;
             }
-        });
-    }
 
-    private void llenarComboVenta() {
-        List productos = np.desplegarProductos();
-        DefaultComboBoxModel dml = new DefaultComboBoxModel();
-        for (int i = 0; i < productos.size(); i++) {
-            ModeloProducto prod = (ModeloProducto) productos.get(i);
-            if (prod.getCantidad() != 0) {
-                dml.addElement(prod.getNombre());
-            }
+        } else {
+            //JOptionPane.showMessageDialog(new JPanel(), "No hay productos registrados!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        comboProducto.setModel(dml);
-        ponerPrecio();
+        return true;
     }
 
     private void llenarComboInv() {
