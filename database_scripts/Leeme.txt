@@ -1,1 +1,5 @@
-Ejecuta el de clientes primero antes que los demás.
+Primero crea un usuario para el programa. Por default el usuario es "phantomcide" con password "sesamo" (se puede cambiar en conexionmysql.java).
+Después crea una BD en mysql workbench (o consola) llamada "gimnasio".
+Dale todos los permisos al usuario que acabas de crear en la BD gimnasio (busca en Google, flojo).
+Ejecuta el de clientes primero, luego el de producto y el resto en cualquier orden.
+Si todo salió bien, deberías poder registrar datos en la BD.
