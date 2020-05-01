@@ -27,8 +27,9 @@ CREATE TABLE `producto` (
   `nombre` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `precio` double DEFAULT NULL,
+  `categoria` int(11) DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -40,4 +41,4 @@ CREATE TABLE `producto` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-28 12:59:06
+-- Dump completed on 2020-05-01  0:47:00

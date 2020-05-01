@@ -27,7 +27,7 @@ public class DAOProductos implements IDAO {
         ModeloProducto prod = (ModeloProducto) obj;
 
         //System.out.println(mem.getCliente().getId());
-        String query = "INSERT INTO producto(nombre, cantidad, precio) VALUES(\'" + prod.getNombre() + "\',\'" + prod.getCantidad() + "\',\'" + prod.getPrecio() + "\');";
+        String query = "INSERT INTO producto(nombre, cantidad, precio, categoria) VALUES(\'" + prod.getNombre() + "\',\'" + prod.getCantidad() + "\',\'" + prod.getPrecio() + "\',\'" + prod.getCategoria() + "\');";
 
         try {
             Statement s = conn.createStatement();

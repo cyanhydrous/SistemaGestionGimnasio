@@ -10,10 +10,20 @@ package Modelos;
  * @author phantomcide
  */
 public class ModeloProducto {
+
     String idproducto;
     String nombre;
     int cantidad;
+    int categoria;
     double precio;
+
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
+    }
 
     public String getIdproducto() {
         return idproducto;
@@ -62,6 +72,14 @@ public class ModeloProducto {
         this.cantidad = cantidad;
         this.precio = precio;
     }
+
+    public ModeloProducto(String nombre, int cantidad, double precio, int categoria) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.categoria = categoria;
+        this.precio = precio;
+    }    
+    
 
     public ModeloProducto(String nombre, double precio) {
         this.nombre = nombre;

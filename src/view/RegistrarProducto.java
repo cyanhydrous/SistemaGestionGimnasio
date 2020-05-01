@@ -33,8 +33,8 @@ public class RegistrarProducto extends javax.swing.JFrame {
             String nombre = campoTextoNombre.getText();
             String precio = campoTextoPrecio.getText();
             String cantidad = campoTextoCantidad.getText();
-            String categoria = comboBoxCategorias.getSelectedItem().toString();
-            ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio));
+            int categoria = obtenerCategoria();
+            ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
             if (productos.addProducto(prod)) {
                 JOptionPane.showMessageDialog(new JPanel(), "Se registró el producto correctamente");
                 this.dispose();
@@ -43,6 +43,22 @@ public class RegistrarProducto extends javax.swing.JFrame {
             }           
             
         }        
+    }
+    
+    private int obtenerCategoria(){
+        String categoria = comboBoxCategorias.getSelectedItem().toString();
+        switch (categoria){
+            case "Articulos para Ejercicio":
+                return 1;
+            case "Proteina":
+                return 2;
+            case "Aminoácidos":
+                return 3;
+            case "Termogenico":
+                return 4;
+        }
+        
+        return -1;
     }
 
     private boolean validarEntrada() {
