@@ -234,6 +234,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         menuProductos.setText("Productos");
         menuProductos.add(jSeparator3);
 
+        objMenuRegistroProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
         objMenuRegistroProductos.setText("Registrar Productos");
         objMenuRegistroProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,6 +243,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         menuProductos.add(objMenuRegistroProductos);
 
+        objMenuInventario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK));
         objMenuInventario.setText("Inventariar Productos");
         objMenuInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +252,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         menuProductos.add(objMenuInventario);
 
+        editarProductoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
         editarProductoMenu.setText("Editar producto");
         editarProductoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +262,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         menuProductos.add(editarProductoMenu);
         menuProductos.add(jSeparator4);
 
+        objMenuVentaProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         objMenuVentaProducto.setText("Vender Productos");
         objMenuVentaProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
