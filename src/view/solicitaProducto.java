@@ -26,6 +26,7 @@ public class solicitaProducto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         llenarLista();
+        this.setTitle("Seleccione");
     }
 
     /**
@@ -78,7 +79,7 @@ public class solicitaProducto extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 46, Short.MAX_VALUE))
+                        .addGap(0, 134, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

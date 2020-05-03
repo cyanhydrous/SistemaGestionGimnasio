@@ -29,12 +29,14 @@ public class RegistrarProducto extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Registrar Producto");
     }
 
     public RegistrarProducto(String accion, ModeloProducto prod) {
         this.prod = prod;
         this.accion = accion;
         initComponents();
+        this.setTitle("Editar Producto");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         campoTextoNombre.setText(prod.getNombre());
@@ -123,7 +125,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         String precio = campoTextoPrecio.getText();
         String cantidad = campoTextoCantidad.getText();
         //String categoria = comboBoxCategorias.getSelectedItem().toString();
-        if (!nombre.matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
+        if (!nombre.matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
             JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         } else if (nombre.length() > 45) {
