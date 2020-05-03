@@ -107,7 +107,7 @@ public class DAOProductos implements IDAO {
             String query = "SELECT * FROM producto";
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
-                ModeloProducto prod = new ModeloProducto(rs.getString("idproducto"), rs.getString("nombre"), Integer.parseInt(rs.getString("cantidad")), Double.parseDouble(rs.getString("precio")));
+                ModeloProducto prod = new ModeloProducto(rs.getString("idproducto"), rs.getString("nombre"), Integer.parseInt(rs.getString("cantidad")), Double.parseDouble(rs.getString("precio")), Integer.parseInt(rs.getString("categoria")));
                 productos.add(prod);
             }
             conn.close();

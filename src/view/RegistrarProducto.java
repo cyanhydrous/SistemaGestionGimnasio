@@ -7,6 +7,7 @@ package view;
 
 import Modelos.ModeloProducto;
 import Negocio.NegocioProducto;
+import java.text.DecimalFormat;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
 public class RegistrarProducto extends javax.swing.JFrame {
 
     NegocioProducto productos = new NegocioProducto();
+    String accion = "reg";
+    ModeloProducto prod;
 
     /**
      * Creates new form RegistrarProducto
@@ -28,26 +31,80 @@ public class RegistrarProducto extends javax.swing.JFrame {
         this.setResizable(false);
     }
 
-    private void registrarProducto() {
-        if (validarEntrada()) {
-            String nombre = campoTextoNombre.getText();
-            String precio = campoTextoPrecio.getText();
-            String cantidad = campoTextoCantidad.getText();
-            int categoria = obtenerCategoria();
-            ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
-            if (productos.addProducto(prod)) {
-                JOptionPane.showMessageDialog(new JPanel(), "Se registró el producto correctamente");
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
-            }           
-            
-        }        
+    public RegistrarProducto(String accion, ModeloProducto prod) {
+        this.prod = prod;
+        this.accion = accion;
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        campoTextoNombre.setText(prod.getNombre());
+        campoTextoPrecio.setText(new DecimalFormat("#").format(prod.getPrecio()));
+        campoTextoCantidad.setText(prod.getCantidad() + "");
+        campoTextoCantidad.setEnabled(false);
+        categorizarProducto(prod.getCategoria());
+        System.out.println(prod.getCategoria());
+        btnAgregar.setText("Actualizar");
     }
-    
-    private int obtenerCategoria(){
+
+    private void registrarProducto() {
+        if (accion == "reg") {
+            System.out.println("Registrar");
+            if (validarEntrada()) {
+                String nombre = campoTextoNombre.getText();
+                String precio = campoTextoPrecio.getText();
+                String cantidad = campoTextoCantidad.getText();
+                int categoria = obtenerCategoria();
+                ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
+                if (productos.addProducto(prod)) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Se registró el producto correctamente");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        } else if (accion == "ed") {
+            System.out.println("Actualizar");
+            if (validarEntrada()) {
+                prod.setNombre(campoTextoNombre.getText());
+                prod.setPrecio(Integer.parseInt(campoTextoPrecio.getText()));
+                prod.setCategoria(obtenerCategoria());                
+                //ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
+                if (productos.updProducto(prod)) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Se actualizó el producto correctamente");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        }
+
+    }
+
+    private void categorizarProducto(int cat) {
+        switch (cat) {
+            case 1:
+                comboBoxCategorias.setSelectedIndex(0);
+                break;
+            case 2:
+                comboBoxCategorias.setSelectedIndex(1);
+                break;
+            case 3:
+                comboBoxCategorias.setSelectedIndex(2);
+                break;
+            case 4:
+                comboBoxCategorias.setSelectedIndex(3);
+                break;
+            default:
+                System.out.println("Error");
+                break;
+        }
+    }
+
+    private int obtenerCategoria() {
         String categoria = comboBoxCategorias.getSelectedItem().toString();
-        switch (categoria){
+        switch (categoria) {
             case "Articulos para Ejercicio":
                 return 1;
             case "Proteina":
@@ -57,7 +114,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
             case "Termogenico":
                 return 4;
         }
-        
+
         return -1;
     }
 
@@ -116,7 +173,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
         jLabel4.setText("Categoria:");
 
-        comboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Articulos para Ejercicio", "Proteina", "Aminoácidos", "Termogenico", " " }));
+        comboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Articulos para Ejercicio", "Proteina", "Aminoácidos", "Termogenico" }));
         comboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxCategoriasActionPerformed(evt);

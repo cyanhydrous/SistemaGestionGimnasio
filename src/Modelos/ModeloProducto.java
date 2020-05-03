@@ -60,11 +60,12 @@ public class ModeloProducto {
     public ModeloProducto() {
     }
 
-    public ModeloProducto(String idproducto, String nombre, int cantidad, double precio) {
+    public ModeloProducto(String idproducto, String nombre, int cantidad, double precio, int categoria) {
         this.idproducto = idproducto;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.categoria = categoria;
     }
 
     public ModeloProducto(String nombre, int cantidad, double precio) {
