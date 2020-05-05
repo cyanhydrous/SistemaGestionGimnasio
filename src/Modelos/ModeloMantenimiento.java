@@ -23,6 +23,13 @@ public class ModeloMantenimiento {
         this.estadoEquipo = estadoEquipo;
     }
 
+    public ModeloMantenimiento(String idmantenimiento, String idequipo, boolean estadoEquipo) {
+        this.idmantenimiento = idmantenimiento;
+        this.equipo = new ModeloEquipo();
+        equipo.setIdequipo(idequipo);
+        this.estadoEquipo = estadoEquipo;
+    }
+    
     public String getIdmantenimiento() {
         return idmantenimiento;
     }
