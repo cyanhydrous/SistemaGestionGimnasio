@@ -431,7 +431,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_objMenuMantenimientoActionPerformed
 
     private void objMenuRegistrarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarEquipoActionPerformed
-        // TODO add your handling code here:
+        RegistrarEquipo eq = new RegistrarEquipo();
+        eq.setVisible(true);
     }//GEN-LAST:event_objMenuRegistrarEquipoActionPerformed
 
     private void objMenuReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuReporteVentasActionPerformed
