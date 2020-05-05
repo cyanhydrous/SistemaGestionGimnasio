@@ -475,7 +475,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     private void menuAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsistenciasActionPerformed
         if (ctes.desplegarClientes().isEmpty()) {
-            JOptionPane.showMessageDialog(new JPanel(), "No hay productos registrados!\nFavor de registrar productos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JPanel(), "No hay clientes registrados!\nFavor de registrar clientes", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             MainClienteFrm cf = new MainClienteFrm();
             cf.setVisible(true);
