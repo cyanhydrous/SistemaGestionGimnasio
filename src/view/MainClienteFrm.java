@@ -31,6 +31,8 @@ public class MainClienteFrm extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Asistencias");
+        lblStatus.setText("");
     }
 
     /**
@@ -44,12 +46,13 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txfIdCliente = new javax.swing.JTextField();
+        lblStatus = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ingresar su ID");
+        jLabel1.setText("Ingrese su ID y presione Enter");
 
         txfIdCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,25 +65,34 @@ public class MainClienteFrm extends javax.swing.JFrame {
             }
         });
 
+        lblStatus.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                    .addComponent(txfIdCliente))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(txfIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblStatus)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGap(26, 26, 26)
                 .addComponent(txfIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblStatus)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -90,7 +102,8 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (registrarAsistencia()) {
-                JOptionPane.showMessageDialog(new JPanel(), "Bienvenido");
+                lblStatus.setText("Bienvenido " + mems.obtenerMembresia(txfIdCliente.getText()).getCliente().getNombre());
+                //JOptionPane.showMessageDialog(new JPanel(), "El cliente es bienvenido!");
             }
 
             txfIdCliente.setText("");
@@ -102,16 +115,19 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
         if (id.matches("[0-9]+")) {
             boolean memVigente = mems.isMembresiaVigente(id);
-            boolean cteExiste = mems.existeMembresiaIdCliente(Integer.parseInt(id));
+            boolean cteExiste = mems.existeMembresiaIdCliente(Integer.parseInt(id));            
             if (!cteExiste) {
-                JOptionPane.showMessageDialog(new JPanel(), "No hay una membresia con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(new JPanel(), "No hay una membresia con ese ID", "Error", JOptionPane.ERROR_MESSAGE);
+                lblStatus.setText("No hay una membresía con ese ID");
                 return false;
             } else if (!memVigente) {
-                JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente no está vigente", "Error", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente no está vigente", "Error", JOptionPane.ERROR_MESSAGE);
+                lblStatus.setText("Su membresía ha expirado!");
                 return false;
             }
         } else {
-            JOptionPane.showMessageDialog(new JPanel(), "El id debe contener solo números!", "Error", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(new JPanel(), "El id debe contener solo números!", "Error", JOptionPane.ERROR_MESSAGE);
+            lblStatus.setText("El id debe contener solo números!");
             return false;
         }
 
@@ -128,7 +144,10 @@ public class MainClienteFrm extends javax.swing.JFrame {
             boolean stat = asis.addAsistencia(as);
 
             if (!stat) {
-                JOptionPane.showMessageDialog(new JPanel(), "Error: Usted ya está registrado el día de hoy.", "Error", JOptionPane.ERROR_MESSAGE);
+                lblStatus.setText("Usted ya está registrado el día de hoy");
+                //JOptionPane.showMessageDialog(new JPanel(), "Error: Usted ya está registrado el día de hoy.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                
             }
 
             return stat;
@@ -178,6 +197,7 @@ public class MainClienteFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JTextField txfIdCliente;
     // End of variables declaration//GEN-END:variables
 }

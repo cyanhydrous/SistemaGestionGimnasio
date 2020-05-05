@@ -87,6 +87,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         objMenuRegistrarEquipo = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         objMenuMantenimiento = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuAsistencias = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -306,6 +308,19 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuEquipo);
 
+        jMenu2.setText("Asistencias");
+
+        menuAsistencias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        menuAsistencias.setText("Abrir menú de asistencias");
+        menuAsistencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAsistenciasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuAsistencias);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -458,6 +473,15 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editarProductoMenuActionPerformed
 
+    private void menuAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsistenciasActionPerformed
+        if (ctes.desplegarClientes().isEmpty()) {
+            JOptionPane.showMessageDialog(new JPanel(), "No hay productos registrados!\nFavor de registrar productos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            MainClienteFrm cf = new MainClienteFrm();
+            cf.setVisible(true);
+        }
+    }//GEN-LAST:event_menuAsistenciasActionPerformed
+
     private void eliminarMembresia() {
         String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
 
@@ -581,6 +605,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -592,6 +617,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JMenuItem menuAsistencias;
     private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuReporteVentas;
     private javax.swing.JMenuItem objMenuInventario;
