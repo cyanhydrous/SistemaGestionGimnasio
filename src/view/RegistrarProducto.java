@@ -7,7 +7,6 @@ package view;
 
 import Modelos.ModeloProducto;
 import Negocio.NegocioProducto;
-import java.text.DecimalFormat;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,22 +39,28 @@ public class RegistrarProducto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         campoTextoNombre.setText(prod.getNombre());
-        campoTextoPrecio.setText(new DecimalFormat("#").format(prod.getPrecio()));
+        campoTextoPrecio.setText(prod.getPrecio() + "");
         campoTextoCantidad.setText(prod.getCantidad() + "");
         campoTextoCantidad.setEnabled(false);
         categorizarProducto(prod.getCategoria());
         System.out.println(prod.getCategoria());
         btnAgregar.setText("Actualizar");
+        jLabel6.setText("Actualizar Producto");
     }
 
     private void registrarProducto() {
         if (accion == "reg") {
-            System.out.println("Registrar");
             if (validarEntrada()) {
                 String nombre = campoTextoNombre.getText();
                 String precio = campoTextoPrecio.getText();
                 String cantidad = campoTextoCantidad.getText();
                 int categoria = obtenerCategoria();
+                try{
+                    double test = Double.parseDouble(precio);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Cantidad Inválida", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
                 if (productos.addProducto(prod)) {
                     JOptionPane.showMessageDialog(new JPanel(), "Se registró el producto correctamente");
@@ -66,10 +71,15 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
             }
         } else if (accion == "ed") {
-            System.out.println("Actualizar");
             if (validarEntrada()) {
                 prod.setNombre(campoTextoNombre.getText());
-                prod.setPrecio(Integer.parseInt(campoTextoPrecio.getText()));
+                try{
+                    double test = Double.parseDouble(campoTextoPrecio.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(new JPanel(), "Cantidad Inválida", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                prod.setPrecio(Double.parseDouble(campoTextoPrecio.getText()));
                 prod.setCategoria(obtenerCategoria());                
                 //ModeloProducto prod = new ModeloProducto(nombre, Integer.parseInt(cantidad), Double.parseDouble(precio), categoria);
                 if (productos.updProducto(prod)) {
@@ -134,7 +144,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         } else if (!cantidad.matches("[0-9]+")) {
             JOptionPane.showMessageDialog(new JPanel(), "Cantidad inválida", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (!precio.matches("[+-]?[0-9]+(\\\\.[0-9]+)?([Ee][+-]?[0-9]+)?")) {
+        } else if (!precio.matches("[0-9]+(.[0-9]+)?")) {
             JOptionPane.showMessageDialog(new JPanel(), "Precio inválido", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
