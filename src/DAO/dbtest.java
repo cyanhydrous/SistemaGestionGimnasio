@@ -60,13 +60,29 @@ public class dbtest {
 //        NegocioMembresia nm = new NegocioMembresia();
 //        System.out.println(nm.isMembresiaVigente("433257"));
 
-            DAOProductos dp = new DAOProductos();
-            //ModeloProducto mp = new ModeloProducto("Multivitaminico ario xd",50,350.0);
-            //System.out.println(dp.agregar(mp));
-        for (Object obj : dp.getAll()) {
-            ModeloProducto m = (ModeloProducto) obj;
-            System.out.println(m.getNombre());
-        } 
+//            DAOProductos dp = new DAOProductos();
+//            //ModeloProducto mp = new ModeloProducto("Multivitaminico ario xd",50,350.0);
+//            //System.out.println(dp.agregar(mp));
+//        for (Object obj : dp.getAll()) {
+//            ModeloProducto m = (ModeloProducto) obj;
+//            System.out.println(m.getNombre());
+//        } 
+        DAOEquipo de = new DAOEquipo();
+        DAOMantenimiento dm = new DAOMantenimiento();
+        ModeloEquipo mq = new ModeloEquipo();
+        ModeloMantenimiento mqt = new ModeloMantenimiento();        
+        mq.setIdequipo("2");
+        //de.agregar(mq);
+        mq.setNombre("Pesas1");
+        mqt.setEquipo(mq);
+        mqt.setEstadoEquipo(true);
+        mqt.setIdmantenimiento("1");
+        //System.out.println(de.actualizar(mq));
+        System.out.println(dm.actualizar(mqt));
+        List a = dm.getAll();
+        for (int i = 0; i < a.size(); i++) {
+            System.out.println(a.get(i).toString());
+        }
     }
     
     public static void actualizarCte(ModeloCliente cte) {
