@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author phantomcide
  */
-public class NegocioMantemiento {
+public class NegocioMantenimiento {
     DAOMantenimiento dm = new DAOMantenimiento();
     NegocioEquipo ne = new NegocioEquipo();
     

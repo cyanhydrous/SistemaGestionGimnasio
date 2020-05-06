@@ -18,27 +18,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author joshua
  */
-public class MantenimientoEquipoFmr extends javax.swing.JFrame {
+public class AdministrarMantenimientos extends javax.swing.JFrame {
 
     private NegocioMantenimiento nm = new NegocioMantenimiento();
     private NegocioEquipo ne = new NegocioEquipo();
-    String accion = "eq";
 
     /**
      * Creates new form MantenimientoEquipoFmr
      */
-    public MantenimientoEquipoFmr() {
+    public AdministrarMantenimientos() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Registro de Mantenimiento");
-        llenarTabla();
-    }
-
-    public MantenimientoEquipoFmr(String accion) {
-        this.accion = accion;
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle("Administrar Mantenimientos");
         llenarTabla();
     }
 
@@ -75,14 +66,14 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Ocupa repararse?", "Comentario"
+                "ID", "Nombre", "Estado", "Comentario"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -127,8 +118,8 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMant)
                     .addComponent(btnCancelar))
@@ -145,100 +136,32 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
 
     private void btnMantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantActionPerformed
         if (tablaMant.getSelectedRow() != -1) {
-            if (accion.equals("eq")) {
-                registrarMant();
-                llenarTabla();
-            } else if (accion.equals("ma")) {
-                actualizarMant();
-                llenarTabla();
-            }
-
+            registrarMant();
+            llenarTabla();
         } else {
             JOptionPane.showMessageDialog(new JPanel(), "Seleccione un equipo primero!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnMantActionPerformed
 
-    private void actualizarMant() {
-        ModeloMantenimiento man = obtenerMantLista();
-        if (tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString() == null || tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString().isEmpty()) {
-            man.setComentario("N/A");
-        } else {
-            man.setComentario(tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString());
-        }
-        
-        if (nm.updMantenimiento(man)) {
-            JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
-        } else {
-            JOptionPane.showMessageDialog(new JPanel(), "Error al actualizar mantenimiento!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void registrarMant() {
-
-        ModeloEquipo eq = obtenerEquipoLista();
-        ModeloMantenimiento man = new ModeloMantenimiento();
-        man.setEquipo(eq);
-        man.setEstadoEquipo(true);
-        if (tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString() == null || tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString().isEmpty()) {
-            man.setComentario("N/A");
-        } else {
-            man.setComentario(tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString());
-        }
-
-        if (nm.addMantenimiento(man)) {
-            JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(new JPanel(), "Error al registrar mantenimiento!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private ModeloEquipo obtenerEquipoLista() {
-        String id = tablaMant.getValueAt(tablaMant.getSelectedRow(), 0).toString();
-        List eqs = ne.desplegarEquipos();
-        for (int i = 0; i < eqs.size(); i++) {
-            ModeloEquipo eq = (ModeloEquipo) eqs.get(i);
-            if (eq.getIdequipo().equals(id)) {
-                return eq;
-            }
-        }
-        return null;
-    }
-
-    private ModeloMantenimiento obtenerMantLista() {
-        String id = tablaMant.getValueAt(tablaMant.getSelectedRow(), 0).toString();
         List mants = nm.desplegarMantenimientos();
-        for (int i = 0; i < mants.size(); i++) {
-            ModeloMantenimiento man = (ModeloMantenimiento) mants.get(i);
-            if (man.getIdmantenimiento().equals(id)) {
-                return man;
-            }
-        }
-        return null;
+
     }
 
     private void llenarTabla() {
 
         vaciarTabla();
-        if (accion.equals("eq")) {
-            for (Object obj : ne.desplegarEquipos()) {
-                ModeloEquipo mm = (ModeloEquipo) obj;
-                ((DefaultTableModel) tablaMant.getModel()).addRow(new Object[]{
-                    mm.getIdequipo(), mm.getNombre(), true, ""});
-            }
-        } else if (accion.equals("ma")) {
-            for (Object obj : nm.desplegarMantenimientos()) {
-                ModeloMantenimiento mm = (ModeloMantenimiento) obj;
-                String comentario;
+        for (Object obj : nm.desplegarMantenimientos()) {
+            ModeloMantenimiento mm = (ModeloMantenimiento) obj;
+            String comentario;
 
-                if (mm.getComentario() == null || mm.getComentario().isEmpty()) {
-                    comentario = "N/A";
-                } else {
-                    comentario = mm.getComentario();
-                }
-                ((DefaultTableModel) tablaMant.getModel()).addRow(new Object[]{
-                    mm.getIdmantenimiento(), mm.getEquipo().getNombre(), true, comentario});
+            if (mm.getComentario() == null || mm.getComentario().isEmpty()) {
+                comentario = "N/A";
+            } else {
+                comentario = mm.getComentario();
             }
+            ((DefaultTableModel) tablaMant.getModel()).addRow(new Object[]{
+                mm.getIdmantenimiento(),mm.getEquipo().getNombre(), mm.isEstadoEquipo(), comentario});
         }
     }
 

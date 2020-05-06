@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author phantomcide
  */
-public class DAOMantenimiento implements IDAO{
+public class DAOMantenimiento implements IDAO {
 
     @Override
     public boolean agregar(Object obj) {
@@ -27,8 +27,8 @@ public class DAOMantenimiento implements IDAO{
         ModeloMantenimiento man = (ModeloMantenimiento) obj;
 
         //System.out.println(mem.getCliente().getId());
-        String query = "INSERT INTO mantenimiento(idequipo,estado) VALUES(\'" + man.getEquipo().getIdequipo() +"\',"+ man.isEstadoEquipo() + ");";
-
+        String query = "INSERT INTO mantenimiento(idequipo,estado,comentario) VALUES(\'" + man.getEquipo().getIdequipo() + "\'," + man.isEstadoEquipo() + ",\'" + man.getComentario() + "\');";
+        System.out.println(query);
         try {
             Statement s = conn.createStatement();
             s.execute(query);
@@ -47,7 +47,7 @@ public class DAOMantenimiento implements IDAO{
         ModeloMantenimiento man = (ModeloMantenimiento) obj;
 
         //System.out.println(mem.getCliente().getId());
-        String query = "DELETE FROM mantenimiento WHERE idmant=" + man.getIdmantenimiento() +";";
+        String query = "DELETE FROM mantenimiento WHERE idmant=" + man.getIdmantenimiento() + ";";
 
         try {
             Statement s = conn.createStatement();
@@ -67,7 +67,8 @@ public class DAOMantenimiento implements IDAO{
         ModeloMantenimiento man = (ModeloMantenimiento) obj;
 
         //System.out.println(mem.getCliente().getId());
-        String query = "UPDATE mantenimiento SET estado="+man.isEstadoEquipo()+" WHERE idmant="+man.getIdmantenimiento()+";";
+        String query = "UPDATE mantenimiento SET comentario=\'" + man.getComentario() + "\', estado=" + man.isEstadoEquipo() + " WHERE idmant=" + man.getIdmantenimiento() + ";";
+        System.out.println(query);
 
         try {
             Statement s = conn.createStatement();
@@ -108,7 +109,7 @@ public class DAOMantenimiento implements IDAO{
             String query = "SELECT * FROM mantenimiento";
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
-                ModeloMantenimiento eq = new ModeloMantenimiento(rs.getString("idmant"),rs.getString("idequipo"),Boolean.parseBoolean(rs.getString("estado")));
+                ModeloMantenimiento eq = new ModeloMantenimiento(rs.getString("idmant"), rs.getString("idequipo"), Boolean.parseBoolean(rs.getString("estado")), rs.getString("comentario"));
                 mants.add(eq);
             }
             conn.close();
@@ -117,5 +118,5 @@ public class DAOMantenimiento implements IDAO{
         }
         return mants;
     }
-    
+
 }

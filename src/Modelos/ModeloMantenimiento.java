@@ -13,6 +13,7 @@ public class ModeloMantenimiento {
     String idmantenimiento;
     ModeloEquipo equipo;
     boolean estadoEquipo;
+    String comentario;
 
     public ModeloMantenimiento() {
     }
@@ -23,11 +24,20 @@ public class ModeloMantenimiento {
         this.estadoEquipo = estadoEquipo;
     }
 
-    public ModeloMantenimiento(String idmantenimiento, String idequipo, boolean estadoEquipo) {
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public ModeloMantenimiento(String idmantenimiento, String idequipo, boolean estadoEquipo, String comentario) {
         this.idmantenimiento = idmantenimiento;
         this.equipo = new ModeloEquipo();
         equipo.setIdequipo(idequipo);
         this.estadoEquipo = estadoEquipo;
+        this.comentario = comentario;
     }
     
     public String getIdmantenimiento() {

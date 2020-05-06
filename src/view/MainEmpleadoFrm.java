@@ -32,6 +32,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     NegocioMembresia membs = new NegocioMembresia();
     NegocioCliente ctes = new NegocioCliente();
     NegocioProducto np = new NegocioProducto();
+    NegocioEquipo ne = new NegocioEquipo();
+    NegocioMantenimiento nm = new NegocioMantenimiento();
 
     /**
      * Creates new form MainEmpleadoFrm
@@ -87,6 +89,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         objMenuRegistrarEquipo = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         objMenuMantenimiento = new javax.swing.JMenuItem();
+        menuAdmMants = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuAsistencias = new javax.swing.JMenuItem();
 
@@ -306,6 +309,14 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         MenuEquipo.add(objMenuMantenimiento);
 
+        menuAdmMants.setText("Administrar Mantenimientos");
+        menuAdmMants.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAdmMantsActionPerformed(evt);
+            }
+        });
+        MenuEquipo.add(menuAdmMants);
+
         jMenuBar1.add(MenuEquipo);
 
         jMenu2.setText("Asistencias");
@@ -427,7 +438,12 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void objMenuMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuMantenimientoActionPerformed
-        // TODO add your handling code here:
+        if (ne.desplegarEquipos().isEmpty()) {
+            JOptionPane.showMessageDialog(new JPanel(), "No hay equipo registrado!\nRegistre equipo antes de proceder", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            MantenimientoEquipoFmr me = new MantenimientoEquipoFmr();
+            me.setVisible(true);
+        }
     }//GEN-LAST:event_objMenuMantenimientoActionPerformed
 
     private void objMenuRegistrarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarEquipoActionPerformed
@@ -482,6 +498,15 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
             cf.setVisible(true);
         }
     }//GEN-LAST:event_menuAsistenciasActionPerformed
+
+    private void menuAdmMantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdmMantsActionPerformed
+        if (nm.desplegarMantenimientos().isEmpty()) {
+            JOptionPane.showMessageDialog(new JPanel(), "No hay mantenimientos registrados!\nFavor de registrarlos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            MantenimientoEquipoFmr am = new MantenimientoEquipoFmr("ma");
+            am.setVisible(true);
+        }
+    }//GEN-LAST:event_menuAdmMantsActionPerformed
 
     private void eliminarMembresia() {
         String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
@@ -618,6 +643,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JMenuItem menuAdmMants;
     private javax.swing.JMenuItem menuAsistencias;
     private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuReporteVentas;
