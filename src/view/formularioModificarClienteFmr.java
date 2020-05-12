@@ -10,6 +10,10 @@ import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -335,12 +339,22 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     }//GEN-LAST:event_comboTipoActionPerformed
 
     public int generateUniqueId() {
+        ArrayList<Integer> listaids = new ArrayList<Integer>();
+        List ctes = clientes.desplegarClientes();
+        if (ctes.isEmpty()) {
+            return 1;
+        }
+        for (int i = 0; i < ctes.size(); i++) {
+            ModeloCliente mc = (ModeloCliente) ctes.get(i);
+            listaids.add(mc.getId());
+        }
+        String largest = ""+Collections.max(listaids);
         UUID idOne = UUID.randomUUID();
         String str = "" + idOne;
         int uid = str.hashCode();
         String filterStr = "" + uid;
-        System.out.println(filterStr);
-        str = filterStr.replaceAll("-", "").substring(3, 9);
+        //System.out.println(filterStr);
+        str = filterStr.replaceAll("-", "").substring(9-largest.length(), 9);
         return Integer.parseInt(str);
     }
 
