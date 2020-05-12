@@ -37,7 +37,7 @@ public class NegocioMantenimiento {
         for (int i = 0; i < mants.size(); i++) {
             ModeloMantenimiento man = (ModeloMantenimiento) mants.get(i);
             for (int j = 0; j < eqs.size(); j++) {
-                ModeloEquipo eq = (ModeloEquipo) eqs.get(i);
+                ModeloEquipo eq = (ModeloEquipo) eqs.get(j);
                 if (man.getEquipo().getIdequipo().equals(eq.getIdequipo())) {
                     man.setEquipo(eq);
                 }
