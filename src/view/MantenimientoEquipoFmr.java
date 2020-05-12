@@ -32,6 +32,8 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Registro de Mantenimiento");
         llenarTabla();
+        btn_resolver.setEnabled(false);
+        btn_resolver.setVisible(false);
     }
 
     public MantenimientoEquipoFmr(String accion) {
@@ -58,6 +60,7 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         tablaMant = new javax.swing.JTable();
         btnMant = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btn_resolver = new javax.swing.JButton();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
@@ -109,6 +112,13 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
             }
         });
 
+        btn_resolver.setText("Resolver");
+        btn_resolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,6 +128,8 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(btnMant)
+                .addGap(57, 57, 57)
+                .addComponent(btn_resolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(45, 45, 45))
@@ -131,7 +143,8 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMant)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btn_resolver))
                 .addContainerGap())
         );
 
@@ -158,6 +171,25 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMantActionPerformed
 
+    private void btn_resolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resolverActionPerformed
+        if (tablaMant.getSelectedRow() != -1) {
+            resolverMant();
+            llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Seleccione un mantenimiento primero!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_resolverActionPerformed
+
+    private void resolverMant(){
+        ModeloMantenimiento man = obtenerMantLista();
+        
+        if (nm.delMantenimiento(man)) {
+            JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Error al resolver el mantenimiento!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void actualizarMant() {
         ModeloMantenimiento man = obtenerMantLista();
         if (tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString() == null || tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString().isEmpty()) {
@@ -285,6 +317,7 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMant;
+    private javax.swing.JButton btn_resolver;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

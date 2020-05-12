@@ -23,7 +23,7 @@ public class NegocioMantenimiento {
     }
     
     public boolean delMantenimiento(ModeloMantenimiento mm){
-        return ne.delEquipo(mm.getEquipo()) && dm.eliminar(mm);
+        return dm.eliminar(mm);
     }
     
     public boolean updMantenimiento(ModeloMantenimiento mm){
