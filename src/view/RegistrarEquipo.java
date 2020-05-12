@@ -11,6 +11,7 @@ import Negocio.NegocioEquipo;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 /**
  *
  * @author jhost
@@ -32,14 +33,14 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     private void registrarEquipo() {
         String nombre = txtNombre.getText();
-        ModeloEquipo equipo = new ModeloEquipo(generateUniqueId(), nombre);
-        
+        ModeloEquipo equipo = new ModeloEquipo(nombre);
+
         if (negEq.addEquipo(equipo)) {
-                    JOptionPane.showMessageDialog(new JPanel(), "Se registró el equipo correctamente");
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            JOptionPane.showMessageDialog(new JPanel(), "Se registró el equipo correctamente");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -141,15 +142,6 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    public String generateUniqueId() {
-        UUID idOne = UUID.randomUUID();
-        String str = "" + idOne;
-        int uid = str.hashCode();
-        String filterStr = "" + uid;
-        System.out.println(filterStr);
-        str = filterStr.replaceAll("-", "").substring(3, 9);
-        return str;
-    }
 
     /**
      * @param args the command line arguments

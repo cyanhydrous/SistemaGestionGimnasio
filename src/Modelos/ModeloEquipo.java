@@ -16,6 +16,10 @@ public class ModeloEquipo {
     public ModeloEquipo() {
     }
 
+    public ModeloEquipo(String nombre) {
+        this.nombre = nombre;
+    }
+
     public ModeloEquipo(String idequipo, String nombre) {
         this.idequipo = idequipo;
         this.nombre = nombre;
