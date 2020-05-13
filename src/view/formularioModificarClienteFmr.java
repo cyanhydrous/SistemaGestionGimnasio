@@ -11,10 +11,8 @@ import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -342,26 +340,26 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         ArrayList<Integer> listaids = new ArrayList<Integer>();
         List ctes = clientes.desplegarClientes();
         if (ctes.isEmpty()) {
-            return 1;
+            return 100;
         }
         for (int i = 0; i < ctes.size(); i++) {
             ModeloCliente mc = (ModeloCliente) ctes.get(i);
             listaids.add(mc.getId());
         }
-        String largest = ""+Collections.max(listaids);
-        UUID idOne = UUID.randomUUID();
-        String str = "" + idOne;
-        int uid = str.hashCode();
-        String filterStr = "" + uid;
-        //System.out.println(filterStr);
-        str = filterStr.replaceAll("-", "").substring(9-largest.length(), 9);
-        return Integer.parseInt(str);
+        return Collections.max(listaids) + 1;
+//        UUID idOne = UUID.randomUUID();
+//        String str = "" + idOne;
+//        int uid = str.hashCode();
+//        String filterStr = "" + uid;
+//        //System.out.println(filterStr);
+//        str = filterStr.replaceAll("-", "").substring(9-largest.length(), 9);
+//        return Integer.parseInt(str);
     }
 
     private boolean validarEntrada() {
 
         if (!txfNombre.getText().equals("") && !txfTelefono.getText().equals("") && !txfDireccion.getText().equals("")) {
-            if (!txfNombre.getText().matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
+            if (!txfNombre.getText().matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ.]{1,45}")) {
                 JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
                 System.out.println("Nombre invalido");
                 return false;
@@ -371,7 +369,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
             } else if (txfDireccion.getText().length() > 50) {
                 JOptionPane.showMessageDialog(new JPanel(), "La dirección excedió el límite de caracteres (50)", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (!txfDireccion.getText().matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ#-]{1,50}")) {
+            } else if (!txfDireccion.getText().matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ#-.]{1,50}")) {
                 JOptionPane.showMessageDialog(new JPanel(), "La dirección contiene caracteres inválidos", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             } else if (!txfTelefono.getText().matches("[0-9]+")) {

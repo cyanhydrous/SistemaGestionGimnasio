@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/view/formularioModificarClienteFmr.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>347</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Modelos/ModeloEquipo.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/DAO/DAOClientes.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Negocio/NegocioCliente.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/DAO/DAOEquipo.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/formularioModificarClienteFmr.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Negocio/NegocioEquipo.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Negocio/NegocioMembresia.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/Negocio/NegocioMantenimiento.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/MainEmpleadoFrm.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/DAO/DAOMembresias.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/MantenimientoEquipoFmr.java</file>
+            <file>file:/home/commons/Shared%20Projects/git/SistemaGestionGimnasio-master/src/view/RegistrarEquipo.java</file>
+        </group>
     </open-files>
 </project-private>
