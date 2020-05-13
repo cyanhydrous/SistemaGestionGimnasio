@@ -9,6 +9,7 @@ import Modelos.ModeloCliente;
 import Modelos.ModeloMembresia;
 import Negocio.NegocioCliente;
 import Negocio.NegocioMembresia;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +54,7 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Modificar Membresia");
         txfID.setEditable(false);
+        txfID.setEnabled(false);
         this.setLocationRelativeTo(null);
     }
 
@@ -88,6 +90,11 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         comboTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
         jLabel1.setText("STEEL FACTORY GYM");
@@ -96,9 +103,21 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nombre");
 
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreKeyPressed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Direccion");
+
+        txfDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfDireccionKeyPressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -122,12 +141,23 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Telefono");
 
+        txfTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfTelefonoKeyPressed(evt);
+            }
+        });
+
         jLabel6.setText("Tipo de Membresia");
 
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semanal", "Mensual", "Dia" }));
         comboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboTipoActionPerformed(evt);
+            }
+        });
+        comboTipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboTipoKeyPressed(evt);
             }
         });
 
@@ -335,6 +365,61 @@ public class formularioModificarClienteFmr extends javax.swing.JFrame {
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboTipoActionPerformed
+
+    private void comboTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboTipoKeyPressed
+        if (accion.equals("renovar")) {
+            if (evt.getSource().equals(comboTipo)) {
+                switch (evt.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        btnModificarActionPerformed(null);
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        btnCancelarActionPerformed(null);
+                        break;
+                }
+            }
+        }
+    }//GEN-LAST:event_comboTipoKeyPressed
+
+    private void txfDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfDireccionKeyPressed
+        if (accion.equals("registrar") || accion.equals("modificar")) {
+            if (evt.getSource().equals(txfDireccion)) {
+                switch (evt.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        btnModificarActionPerformed(null);
+                        break;
+                }
+            }
+        }
+    }//GEN-LAST:event_txfDireccionKeyPressed
+
+    private void txfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyPressed
+        if (accion.equals("modificar")) {
+            if (evt.getSource().equals(txfNombre)) {
+                switch (evt.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        btnModificarActionPerformed(null);
+                        break;
+                }
+            }
+        }
+    }//GEN-LAST:event_txfNombreKeyPressed
+
+    private void txfTelefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfTelefonoKeyPressed
+        if (accion.equals("modificar")) {
+            if (evt.getSource().equals(txfTelefono)) {
+                switch (evt.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        btnModificarActionPerformed(null);
+                        break;
+                }
+            }
+        }
+    }//GEN-LAST:event_txfTelefonoKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     public int generateUniqueId() {
         ArrayList<Integer> listaids = new ArrayList<Integer>();

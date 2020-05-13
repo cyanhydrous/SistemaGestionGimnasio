@@ -424,6 +424,14 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                     }
 
                     break;
+
+                case KeyEvent.VK_E:
+                    if (tabla.getSelectedRow() != -1) {
+                        eliminarMembresia();
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
             }
         }
 
@@ -453,7 +461,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     private void objMenuReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuReporteVentasActionPerformed
         // TODO add your handling code here:
-        PeriodoFmr p  = new PeriodoFmr();
+        PeriodoFmr p = new PeriodoFmr();
         p.setVisible(true);
     }//GEN-LAST:event_objMenuReporteVentasActionPerformed
 
