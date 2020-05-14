@@ -12,7 +12,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuRegistrarMembresia">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+N"/>
+                  <KeyStroke key="Ctrl+1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Nueva Membresia"/>
               </Properties>
@@ -25,7 +25,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuModificarMembresia">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+M"/>
+                  <KeyStroke key="Ctrl+2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Membresia"/>
               </Properties>
@@ -38,7 +38,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuRenovarMembresia">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+R"/>
+                  <KeyStroke key="Ctrl+3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Renovar Membresia"/>
               </Properties>
@@ -58,7 +58,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuRegistroProductos">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+P"/>
+                  <KeyStroke key="Shift+1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Productos"/>
               </Properties>
@@ -69,7 +69,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuInventario">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+I"/>
+                  <KeyStroke key="Shift+2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Inventariar Productos"/>
               </Properties>
@@ -80,7 +80,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="editarProductoMenu">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+E"/>
+                  <KeyStroke key="Shift+3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar producto"/>
               </Properties>
@@ -93,7 +93,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="objMenuVentaProducto">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+Ctrl+V"/>
+                  <KeyStroke key="Shift+4"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Vender Productos"/>
               </Properties>
@@ -125,6 +125,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="objMenuRegistrarEquipo">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Equipo"/>
               </Properties>
               <Events>
@@ -135,6 +138,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="objMenuMantenimiento">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+2"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Mantenimiento de Equipo"/>
               </Properties>
               <Events>
@@ -143,6 +149,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuAdmMants">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+3"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Administrar Mantenimientos"/>
               </Properties>
               <Events>

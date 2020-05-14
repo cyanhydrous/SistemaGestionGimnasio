@@ -7,8 +7,11 @@ package view;
 
 import Modelos.ModeloProducto;
 import Negocio.NegocioProducto;
+import com.sun.glass.events.KeyEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -52,6 +55,11 @@ public class solicitaProducto extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        listaProductos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listaProductosKeyPressed(evt);
+            }
         });
         jScrollPane1.setViewportView(listaProductos);
 
@@ -118,7 +126,25 @@ public class solicitaProducto extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private ModeloProducto obtenerProductoLista(){
+    private void listaProductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaProductosKeyPressed
+
+        if (listaProductos.getSelectedIndex() != -1) {
+            if (evt.getSource().equals(listaProductos)) {
+                switch (evt.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        btnAceptarActionPerformed(null);
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        btnCancelarActionPerformed(null);
+                        break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No se ha seleccionado un producto a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_listaProductosKeyPressed
+
+    private ModeloProducto obtenerProductoLista() {
         List prods = np.desplegarProductos();
         String nombre = listaProductos.getSelectedValue();
         for (Object p : prods) {
@@ -129,6 +155,7 @@ public class solicitaProducto extends javax.swing.JFrame {
         }
         return null;
     }
+
     /**
      * @param args the command line arguments
      */

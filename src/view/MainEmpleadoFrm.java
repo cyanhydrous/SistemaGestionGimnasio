@@ -205,7 +205,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         jMenu1.setText("Membresia");
 
-        objMenuRegistrarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        objMenuRegistrarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_MASK));
         objMenuRegistrarMembresia.setText("Registrar Nueva Membresia");
         objMenuRegistrarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,7 +215,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jMenu1.add(objMenuRegistrarMembresia);
         jMenu1.add(jSeparator1);
 
-        objMenuModificarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        objMenuModificarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
         objMenuModificarMembresia.setText("Modificar Membresia");
         objMenuModificarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +225,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         jMenu1.add(objMenuModificarMembresia);
         jMenu1.add(jSeparator2);
 
-        objMenuRenovarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        objMenuRenovarMembresia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
         objMenuRenovarMembresia.setText("Renovar Membresia");
         objMenuRenovarMembresia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,7 +239,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         menuProductos.setText("Productos");
         menuProductos.add(jSeparator3);
 
-        objMenuRegistroProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
+        objMenuRegistroProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.SHIFT_MASK));
         objMenuRegistroProductos.setText("Registrar Productos");
         objMenuRegistroProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,7 +248,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         menuProductos.add(objMenuRegistroProductos);
 
-        objMenuInventario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_MASK));
+        objMenuInventario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.SHIFT_MASK));
         objMenuInventario.setText("Inventariar Productos");
         objMenuInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +257,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         menuProductos.add(objMenuInventario);
 
-        editarProductoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
+        editarProductoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.SHIFT_MASK));
         editarProductoMenu.setText("Editar producto");
         editarProductoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +267,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         menuProductos.add(editarProductoMenu);
         menuProductos.add(jSeparator4);
 
-        objMenuVentaProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        objMenuVentaProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, java.awt.event.InputEvent.SHIFT_MASK));
         objMenuVentaProducto.setText("Vender Productos");
         objMenuVentaProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -292,6 +292,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         MenuEquipo.setText("Equipo");
 
+        objMenuRegistrarEquipo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.ALT_MASK));
         objMenuRegistrarEquipo.setText("Registrar Equipo");
         objMenuRegistrarEquipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,6 +302,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         MenuEquipo.add(objMenuRegistrarEquipo);
         MenuEquipo.add(jSeparator5);
 
+        objMenuMantenimiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.ALT_MASK));
         objMenuMantenimiento.setText("Registrar Mantenimiento de Equipo");
         objMenuMantenimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,6 +311,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         });
         MenuEquipo.add(objMenuMantenimiento);
 
+        menuAdmMants.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.ALT_MASK));
         menuAdmMants.setText("Administrar Mantenimientos");
         menuAdmMants.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

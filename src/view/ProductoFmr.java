@@ -11,6 +11,7 @@ import Negocio.NegocioProducto;
 import Negocio.NegocioVenta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -35,14 +36,15 @@ public class ProductoFmr extends javax.swing.JFrame {
         this.accion = accion;
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        crearEventoCombo();
         if (accion == "Venta Productos") {
             this.setTitle("Venta de Productos");
             LabelTitulo.setText("Venta de Productos");
             LabelProducto.setText("Producto a Vender");
             labelCampoTexto.setText("Precio :");
             botonRealizarAccion.setText("Vender");
-            cantidadOPreciotxt.setEditable(false);
-            crearEventoCombo();
+            cantidadOPreciotxt.setEditable(false);            
             if (!noserequiere) {
                 llenarComboVenta();
             }
@@ -65,7 +67,12 @@ public class ProductoFmr extends javax.swing.JFrame {
     private void crearEventoCombo() {
         comboProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ponerPrecio();
+                if (accion == "Venta Productos") {
+                    ponerPrecio();
+                } else if (accion == "Inventariar Productos"){
+                    ponerDisponiblesInv();
+                }
+                
             }
         });
     }
@@ -86,6 +93,8 @@ public class ProductoFmr extends javax.swing.JFrame {
         cantidadOPreciotxt = new javax.swing.JTextField();
         botonRealizarAccion = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblDisponibles = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,6 +102,12 @@ public class ProductoFmr extends javax.swing.JFrame {
         LabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         comboProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cantidadOPreciotxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cantidadOPreciotxtKeyPressed(evt);
+            }
+        });
 
         botonRealizarAccion.setText("Vender");
         botonRealizarAccion.addActionListener(new java.awt.event.ActionListener() {
@@ -108,12 +123,16 @@ public class ProductoFmr extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Disponibles:");
+
+        lblDisponibles.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(LabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
@@ -121,17 +140,26 @@ public class ProductoFmr extends javax.swing.JFrame {
                         .addGap(0, 56, Short.MAX_VALUE))
                     .addComponent(LabelProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelCampoTexto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
                         .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(comboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cantidadOPreciotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(comboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(cantidadOPreciotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +173,11 @@ public class ProductoFmr extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelCampoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cantidadOPreciotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblDisponibles))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRealizarAccion)
                     .addComponent(btnCancelar))
@@ -168,6 +200,8 @@ public class ProductoFmr extends javax.swing.JFrame {
                 int cantidad = Integer.parseInt(cantidadOPreciotxt.getText());
                 if (np.inventariarProducto(venta.getProducto(), cantidad)) {
                     JOptionPane.showMessageDialog(null, "Inventariado completado!");
+                    cantidadOPreciotxt.setText("");
+                    ponerDisponiblesInv();
                 } else {
                     JOptionPane.showMessageDialog(new JPanel(), "No se pudo registrar el inventario: Revise la consola", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -201,6 +235,19 @@ public class ProductoFmr extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cantidadOPreciotxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadOPreciotxtKeyPressed
+        if (evt.getSource().equals(cantidadOPreciotxt)) {
+            switch(evt.getKeyCode()){
+                case KeyEvent.VK_ENTER:
+                    botonRealizarAccionActionPerformed(null);
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    btnCancelarActionPerformed(null);
+                    break;
+            }
+        }
+    }//GEN-LAST:event_cantidadOPreciotxtKeyPressed
 
     private boolean realizarVenta(ModeloVenta venta) {
         boolean inv = np.desinventariarProducto(venta.getProducto(), 1);
@@ -264,7 +311,7 @@ public class ProductoFmr extends javax.swing.JFrame {
             if (hayInventario) {
                 comboProducto.setModel(dml);
                 ponerPrecio();
-            } else {                
+            } else {
                 return false;
             }
 
@@ -275,7 +322,7 @@ public class ProductoFmr extends javax.swing.JFrame {
         return true;
     }
 
-    private void llenarComboInv() {
+    private void llenarComboInv() {        
         List productos = np.desplegarProductos();
         DefaultComboBoxModel dml = new DefaultComboBoxModel();
         for (int i = 0; i < productos.size(); i++) {
@@ -283,6 +330,20 @@ public class ProductoFmr extends javax.swing.JFrame {
             dml.addElement(prod.getNombre());
         }
         comboProducto.setModel(dml);
+        ponerDisponiblesInv();
+    }
+
+    private void ponerCantidad() {
+        String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
+        List productos = np.desplegarProductos();
+
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            if (prod.getNombre().equals(nombre)) {
+                lblDisponibles.setText("" + prod.getCantidad());
+                break;
+            }
+        }
     }
 
     private void ponerPrecio() {
@@ -292,7 +353,21 @@ public class ProductoFmr extends javax.swing.JFrame {
         for (int i = 0; i < productos.size(); i++) {
             ModeloProducto prod = (ModeloProducto) productos.get(i);
             if (prod.getNombre().equals(nombre)) {
+                lblDisponibles.setText("" + prod.getCantidad());
                 cantidadOPreciotxt.setText("" + prod.getPrecio());
+                break;
+            }
+        }
+    }
+    
+    private void ponerDisponiblesInv() {
+        String nombre = comboProducto.getItemAt(comboProducto.getSelectedIndex());
+        List productos = np.desplegarProductos();
+
+        for (int i = 0; i < productos.size(); i++) {
+            ModeloProducto prod = (ModeloProducto) productos.get(i);
+            if (prod.getNombre().equals(nombre)) {
+                lblDisponibles.setText("" + prod.getCantidad());
                 break;
             }
         }
@@ -305,6 +380,8 @@ public class ProductoFmr extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JTextField cantidadOPreciotxt;
     private javax.swing.JComboBox<String> comboProducto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelCampoTexto;
+    private javax.swing.JLabel lblDisponibles;
     // End of variables declaration//GEN-END:variables
 }

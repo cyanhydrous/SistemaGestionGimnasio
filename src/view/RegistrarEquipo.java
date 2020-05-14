@@ -8,6 +8,7 @@ package view;
 import Modelos.ModeloEquipo;
 
 import Negocio.NegocioEquipo;
+import java.awt.event.KeyEvent;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -72,6 +73,12 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
         jLabel4.setText("Nombre:");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
+
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,13 +142,37 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        registrarEquipo();
+
+        if (validarEntrada()) {
+            registrarEquipo();
+        }
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        if (evt.getSource().equals(txtNombre)) {
+            switch (evt.getKeyCode()) {
+                case KeyEvent.VK_ENTER:
+                    btnAceptarActionPerformed(null);
+                    break;
+            }
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private boolean validarEntrada() {
+        if (txtNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(new JPanel(), "El nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (!txtNombre.getText().matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ.]{1,45}")) {
+            JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @param args the command line arguments

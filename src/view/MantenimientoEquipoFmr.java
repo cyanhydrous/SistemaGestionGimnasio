@@ -157,6 +157,7 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnMantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantActionPerformed
+
         if (tablaMant.getSelectedRow() != -1) {
             if (accion.equals("eq")) {
                 registrarMant();
@@ -169,27 +170,33 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(new JPanel(), "Seleccione un equipo primero!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnMantActionPerformed
 
     private void btn_resolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resolverActionPerformed
-        if (tablaMant.getSelectedRow() != -1) {
-            resolverMant();
-            llenarTabla();
-        } else {
-            JOptionPane.showMessageDialog(new JPanel(), "Seleccione un mantenimiento primero!", "Error", JOptionPane.ERROR_MESSAGE);
+
+        int input = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea resolverlo?\n¡Esto no se podrá deshacer!");
+        if (input == 0) {
+            if (tablaMant.getSelectedRow() != -1) {
+                resolverMant();
+                llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "Seleccione un mantenimiento primero!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }//GEN-LAST:event_btn_resolverActionPerformed
 
-    private void resolverMant(){
+    private void resolverMant() {
         ModeloMantenimiento man = obtenerMantLista();
-        
+
         if (nm.delMantenimiento(man)) {
             JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
         } else {
             JOptionPane.showMessageDialog(new JPanel(), "Error al resolver el mantenimiento!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void actualizarMant() {
         ModeloMantenimiento man = obtenerMantLista();
         if (tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString() == null || tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString().isEmpty()) {
@@ -197,7 +204,7 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         } else {
             man.setComentario(tablaMant.getValueAt(tablaMant.getSelectedRow(), 3).toString());
         }
-        
+
         if (nm.updMantenimiento(man)) {
             JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
         } else {
