@@ -482,8 +482,12 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
     private void objMenuInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuInventarioActionPerformed
         // TODO add your handling code here:
-        ProductoFmr p = new ProductoFmr("Inventariar Productos");
-        p.setVisible(true);
+        if (np.desplegarProductos().isEmpty()) {
+            JOptionPane.showMessageDialog(new JPanel(), "No hay productos registrados!\nFavor de registrar productos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ProductoFmr p = new ProductoFmr("Inventariar Productos");
+            p.setVisible(true);
+        }
     }//GEN-LAST:event_objMenuInventarioActionPerformed
 
     private void objMenuRegistroProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistroProductosActionPerformed
