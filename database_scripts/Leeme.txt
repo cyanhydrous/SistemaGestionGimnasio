@@ -1,5 +1,22 @@
-Primero crea un usuario para el programa. Por default el usuario es "phantomcide" con password "sesamo" (se puede cambiar en conexionmysql.java).
-Después crea una BD en mysql workbench (o consola) llamada "gimnasio".
-Dale todos los permisos al usuario que acabas de crear en la BD gimnasio (busca en Google, flojo).
-Ejecuta el de clientes primero, luego el de producto, luego el de equipo y el resto en cualquier orden.
-Si todo salió bien, deberías poder registrar datos en la BD.
+Requisitos:
+JDK/JRE 8 de Oracle u OpenJDK/JRE 8
+MySQL 5.7, 8.0 NO FUNCIONARÁ
+Opcionalmente MySQL Workbench (facilita mucho la instalacion)
+
+Pasos para instalar el sistema
+1. Instalar, configurar ( el usuario root) e iniciar MySQL Server.
+    1.1 OJO, es necesario que el servicio de MySQL esté iniciado sino el siguiente paso fallará
+    tanto en consola como en workbench, además Workbench a veces no instala MySQL Server
+
+2. Ejecutar el script bd_gimnasio.sql dentro de Workbench o desde la consola en MySQL así:
+    2.1 Abrir cmd o la terminal
+    2.2 Poner "mysql -u root -p" y enter
+    2.3 Poner la contraseña del usuario root de MySQL
+    2.4 Poner "source [ruta donde se encuentra el script bd_gimnasio]" sin los brackets
+    2.5 Estar atento a posibles errores de la consola
+    2.6 Si todo salió bien debería haber puros "OK" en la consola
+    
+Recomiendo instalar workbench ya que es simplemente arrastrar y soltar el script pero es mas tardado instalar workbench
+
+3. Instalar (si no está instalado) el JRE/JDK 8 de Oracle o el OpenJDK/JRE 8
+4. Abrir el "SistemaGestionGimnasio.jar". OJO: La carpeta "lib" DEBE estar en el mismo directorio que el JAR o no va a funcionar
