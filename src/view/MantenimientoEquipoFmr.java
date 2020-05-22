@@ -179,7 +179,12 @@ public class MantenimientoEquipoFmr extends javax.swing.JFrame {
         if (input == 0) {
             if (tablaMant.getSelectedRow() != -1) {
                 resolverMant();
-                llenarTabla();
+                
+                if (nm.desplegarMantenimientos().isEmpty()) {
+                    this.dispose();
+                } else {
+                    llenarTabla();
+                }                
             } else {
                 JOptionPane.showMessageDialog(new JPanel(), "Seleccione un mantenimiento primero!", "Error", JOptionPane.ERROR_MESSAGE);
             }
