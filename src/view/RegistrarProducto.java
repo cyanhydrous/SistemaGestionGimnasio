@@ -8,6 +8,7 @@ package view;
 import Modelos.ModeloProducto;
 import Negocio.NegocioProducto;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ import javax.swing.JPanel;
  * @author k3vin
  */
 public class RegistrarProducto extends javax.swing.JFrame {
-    
+
     NegocioProducto productos = new NegocioProducto();
     String accion = "reg";
     ModeloProducto prod;
@@ -31,7 +32,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("Registrar Producto");
     }
-    
+
     public RegistrarProducto(String accion, ModeloProducto prod) {
         this.prod = prod;
         this.accion = accion;
@@ -48,7 +49,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         btnAgregar.setText("Actualizar");
         jLabel6.setText("Actualizar Producto");
     }
-    
+
     private void registrarProducto() {
         if (campoTextoCantidad.getText().equals("")) {
             campoTextoCantidad.setText("0");
@@ -72,7 +73,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
+
             }
         } else if (accion == "ed") {
             if (validarEntrada()) {
@@ -92,12 +93,12 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(new JPanel(), "Ocurrió un error interno, verifica la consola para mas detalles", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
+
             }
         }
-        
+
     }
-    
+
     private void categorizarProducto(int cat) {
         switch (cat) {
             case 1:
@@ -120,7 +121,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     private int obtenerCategoria() {
         String categoria = comboBoxCategorias.getSelectedItem().toString();
         switch (categoria) {
@@ -135,10 +136,10 @@ public class RegistrarProducto extends javax.swing.JFrame {
             case "Otro":
                 return 5;
         }
-        
+
         return -1;
     }
-    
+
     private boolean validarEntrada() {
         String nombre = campoTextoNombre.getText();
         String precio = campoTextoPrecio.getText();
@@ -146,6 +147,9 @@ public class RegistrarProducto extends javax.swing.JFrame {
         //String categoria = comboBoxCategorias.getSelectedItem().toString();
         if (!nombre.matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ]{1,45}")) {
             JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (existeProductoNombre(nombre)) {
+            JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n Ya existe un producto con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         } else if (nombre.length() > 45) {
             JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n Excede 45 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
@@ -157,8 +161,21 @@ public class RegistrarProducto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JPanel(), "Precio inválido", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         return true;
+    }
+
+    private boolean existeProductoNombre(String nombre) {
+        List prods = productos.desplegarProductos();
+
+        for (int i = 0; i < prods.size(); i++) {
+            ModeloProducto mp = (ModeloProducto) prods.get(i);
+            if (mp.getNombre().equals(nombre)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -313,7 +330,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private void campoTextoCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTextoCantidadKeyPressed
         if (evt.getSource().equals(campoTextoCantidad)) {
-            switch (evt.getKeyCode()){
+            switch (evt.getKeyCode()) {
                 case KeyEvent.VK_ENTER:
                     btnAgregarActionPerformed(null);
                     break;
@@ -323,7 +340,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private void campoTextoPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTextoPrecioKeyPressed
         if (evt.getSource().equals(campoTextoPrecio)) {
-            switch (evt.getKeyCode()){
+            switch (evt.getKeyCode()) {
                 case KeyEvent.VK_ENTER:
                     btnAgregarActionPerformed(null);
                     break;
@@ -333,14 +350,14 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private void comboBoxCategoriasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxCategoriasKeyPressed
         if (evt.getSource().equals(comboBoxCategorias)) {
-            switch (evt.getKeyCode()){
+            switch (evt.getKeyCode()) {
                 case KeyEvent.VK_ENTER:
                     btnAgregarActionPerformed(null);
                     break;
             }
         }
     }//GEN-LAST:event_comboBoxCategoriasKeyPressed
-    
+
     public String generateUniqueId() {
         UUID idOne = UUID.randomUUID();
         String str = "" + idOne;
