@@ -159,23 +159,28 @@ public class solicitaProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_listaProductosKeyPressed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        
-        int input = JOptionPane.showConfirmDialog(null, "Se eliminará el producto junto con las ventas.\n¡Esto no se podrá deshacer!\nProceder?","Advertencia",JOptionPane.WARNING_MESSAGE);
+
+        int input = JOptionPane.showConfirmDialog(null, "Se eliminará el producto junto con las ventas.\n¡Esto no se podrá deshacer!\nProceder?", "Advertencia", JOptionPane.WARNING_MESSAGE);
         if (input == 0) {
             eliminarProducto();
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
-    private void eliminarProducto(){
+    private void eliminarProducto() {
         ModeloProducto mp = obtenerProductoLista();
         if (np.delProducto(mp)) {
             JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
         } else {
             JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        llenarLista();
+        if (np.desplegarProductos().isEmpty()) {
+            this.dispose();
+        } else {
+            llenarLista();
+        }
+
     }
-    
+
     private ModeloProducto obtenerProductoLista() {
         List prods = np.desplegarProductos();
         String nombre = listaProductos.getSelectedValue();
