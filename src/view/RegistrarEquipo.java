@@ -9,6 +9,7 @@ import Modelos.ModeloEquipo;
 
 import Negocio.NegocioEquipo;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -164,16 +165,33 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreKeyPressed
 
     private boolean validarEntrada() {
-        if (txtNombre.getText().equals("")) {
+        String nombre = txtNombre.getText();
+        if (nombre.equals("")) {
             JOptionPane.showMessageDialog(new JPanel(), "El nombre está vacío", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (!txtNombre.getText().matches("[ A-Za-zñÑáéíóúÁÉÍÓÚ.]{1,45}")) {
+        } else if (!txtNombre.getText().matches("[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ.]{1,45}")) {
             JOptionPane.showMessageDialog(new JPanel(), "El nombre no es válido\n No debe contener símbolos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (existeNombreEquipo(nombre)) {
+            JOptionPane.showMessageDialog(new JPanel(), "Ya existe equipo con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
+    private boolean existeNombreEquipo(String nombre){
+        
+        List eqs = negEq.desplegarEquipos();
+        
+        for (int i = 0; i < eqs.size(); i++) {
+            ModeloEquipo me = (ModeloEquipo) eqs.get(i);
+            if (me.getNombre().equals(nombre)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     /**
      * @param args the command line arguments
      */
