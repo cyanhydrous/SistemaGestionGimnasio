@@ -27,7 +27,8 @@ public class NegocioProducto {
     }
 
     public boolean delProducto(ModeloProducto prod) {
-        return dp.eliminar(prod);
+        NegocioVenta nv = new NegocioVenta();
+        return nv.delVentas(prod.getIdproducto()) && dp.eliminar(prod);
     }
 
     public boolean updProducto(ModeloProducto prod) {

@@ -46,10 +46,11 @@ public class solicitaProducto extends javax.swing.JFrame {
         listaProductos = new javax.swing.JList<>();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Seleccione el producto a editar: ");
+        jLabel1.setText("Seleccione el producto a editar o a eliminar: ");
 
         listaProductos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -77,6 +78,13 @@ public class solicitaProducto extends javax.swing.JFrame {
             }
         });
 
+        btn_eliminar.setText("Eliminar Producto");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,10 +95,12 @@ public class solicitaProducto extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 134, Short.MAX_VALUE))
+                        .addGap(0, 80, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCancelar)))
                 .addContainerGap())
         );
@@ -104,7 +114,8 @@ public class solicitaProducto extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btn_eliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -137,6 +148,9 @@ public class solicitaProducto extends javax.swing.JFrame {
                     case KeyEvent.VK_ESCAPE:
                         btnCancelarActionPerformed(null);
                         break;
+                    case KeyEvent.VK_DELETE:
+                        btn_eliminarActionPerformed(null);
+                        break;
                 }
             }
         } else {
@@ -144,6 +158,24 @@ public class solicitaProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listaProductosKeyPressed
 
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        
+        int input = JOptionPane.showConfirmDialog(null, "Se eliminará el producto junto con las ventas.\n¡Esto no se podrá deshacer!\nProceder?","Advertencia",JOptionPane.WARNING_MESSAGE);
+        if (input == 0) {
+            eliminarProducto();
+        }
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void eliminarProducto(){
+        ModeloProducto mp = obtenerProductoLista();
+        if (np.delProducto(mp)) {
+            JOptionPane.showMessageDialog(new JPanel(), "Hecho!");
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "Error al eliminar!\n Ver la consola para más detalle", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        llenarLista();
+    }
+    
     private ModeloProducto obtenerProductoLista() {
         List prods = np.desplegarProductos();
         String nombre = listaProductos.getSelectedValue();
@@ -205,6 +237,7 @@ public class solicitaProducto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btn_eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaProductos;

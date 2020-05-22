@@ -112,6 +112,9 @@ public class RegistrarProducto extends javax.swing.JFrame {
             case 4:
                 comboBoxCategorias.setSelectedIndex(3);
                 break;
+            case 5:
+                comboBoxCategorias.setSelectedIndex(4);
+                break;
             default:
                 System.out.println("Error");
                 break;
@@ -129,6 +132,8 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 return 3;
             case "Termogenico":
                 return 4;
+            case "Otro":
+                return 5;
         }
         
         return -1;
@@ -195,7 +200,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
             }
         });
 
-        comboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Articulos para Ejercicio", "Proteina", "Aminoácidos", "Termogenico" }));
+        comboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Articulos para Ejercicio", "Proteina", "Aminoácidos", "Termogenico", "Otro" }));
         comboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxCategoriasActionPerformed(evt);

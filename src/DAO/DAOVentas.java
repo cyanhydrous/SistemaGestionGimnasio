@@ -42,7 +42,20 @@ public class DAOVentas implements IDAO{
 
     @Override
     public boolean eliminar(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         ConexionMySQL c = new ConexionMySQL();
+        Connection conn = c.connect();
+
+        String query = "DELETE FROM venta WHERE idproducto=" + obj.toString() + ";";
+
+        try {
+            Statement s = conn.createStatement();
+            s.execute(query);
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override

@@ -22,8 +22,12 @@ public class NegocioVenta {
         return dv.agregar(venta);
     }
     
-    public boolean delVenta(ModeloVenta venta){
-        return dv.eliminar(venta);
+//    public boolean delVenta(ModeloVenta venta){
+//        return dv.eliminar(venta);
+//    }
+    
+    public boolean delVentas(String id){
+        return dv.eliminar(id);
     }
     
     public boolean updVenta(ModeloVenta venta){
