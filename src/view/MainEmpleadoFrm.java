@@ -34,6 +34,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     NegocioProducto np = new NegocioProducto();
     NegocioEquipo ne = new NegocioEquipo();
     NegocioMantenimiento nm = new NegocioMantenimiento();
+    NegocioVenta nv = new NegocioVenta();
 
     /**
      * Creates new form MainEmpleadoFrm
@@ -280,6 +281,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
 
         menuReporteVentas.setText("Reporte de Ventas");
 
+        objMenuReporteVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         objMenuReporteVentas.setText("Generar Reporte de Ventas");
         objMenuReporteVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -463,9 +465,12 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_objMenuRegistrarEquipoActionPerformed
 
     private void objMenuReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuReporteVentasActionPerformed
-        // TODO add your handling code here:
-        PeriodoFmr p = new PeriodoFmr();
-        p.setVisible(true);
+        if (nv.desplegarVentas().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay ventas en el sistema!", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            PeriodoFmr p = new PeriodoFmr();
+            p.setVisible(true);
+        }
     }//GEN-LAST:event_objMenuReporteVentasActionPerformed
 
     private void objMenuVentaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuVentaProductoActionPerformed
