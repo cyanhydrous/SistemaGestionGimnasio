@@ -81,7 +81,7 @@ public class DAOVentas implements IDAO{
 
         try {
             Statement s = conn.createStatement();
-            String query = "SELECT * FROM producto";
+            String query = "SELECT * FROM venta";
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
                 ModeloVenta prod = new ModeloVenta(rs.getString("idventa"), LocalDate.parse(rs.getString("fecha")), rs.getString("idproducto"));
