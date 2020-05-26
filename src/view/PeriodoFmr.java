@@ -133,13 +133,13 @@ public class PeriodoFmr extends javax.swing.JFrame {
         
         DatePickerSettings settings = pickerInicio.getSettings();
         settings.setDateRangeLimits(first, last);
-        //pickerInicio.setSettings(settings);
+        settings = pickerFin.getSettings();
+        settings.setDateRangeLimits(first, last);
     }
     
     private void btnGenerarReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteVentasActionPerformed
         LocalDate inicio = pickerInicio.getDate();
-        LocalDate fin = pickerFin.getDate();
-        
+        LocalDate fin = pickerFin.getDate();        
     }//GEN-LAST:event_btnGenerarReporteVentasActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
