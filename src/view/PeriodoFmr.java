@@ -12,8 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,12 +21,14 @@ import java.util.TreeSet;
 public class PeriodoFmr extends javax.swing.JFrame {
 
     private NegocioVenta nv = new NegocioVenta();
+
     /**
      * Creates new form PeriodoFmr
      */
     public PeriodoFmr() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Reporte de Ventas");
         setFechasPicker();
     }
 
@@ -48,7 +49,7 @@ public class PeriodoFmr extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         pickerInicio = new com.github.lgooddatepicker.components.DatePicker();
         pickerFin = new com.github.lgooddatepicker.components.DatePicker();
-        jButton1 = new javax.swing.JButton();
+        btnreportartodo = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -76,10 +77,10 @@ public class PeriodoFmr extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Mostrar Todo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnreportartodo.setText("Mostrar Todo");
+        btnreportartodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnreportartodoActionPerformed(evt);
             }
         });
 
@@ -93,7 +94,7 @@ public class PeriodoFmr extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGenerarReporteVentas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnreportartodo)
                         .addGap(2, 2, 2)
                         .addComponent(btnCancelar))
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,49 +121,56 @@ public class PeriodoFmr extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerarReporteVentas)
                     .addComponent(btnCancelar)
-                    .addComponent(jButton1))
+                    .addComponent(btnreportartodo))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setFechasPicker(){
+    private void setFechasPicker() {
         List ventas = nv.desplegarVentas();
         List fechas = new ArrayList<>();
         for (int i = 0; i < ventas.size(); i++) {
-            ModeloVenta mv = (ModeloVenta) ventas.get(i);            
+            ModeloVenta mv = (ModeloVenta) ventas.get(i);
             fechas.add(mv.getFechaventa());
         }
-        
+
         LocalDate first = (LocalDate) fechas.stream().min(Comparator.comparing(LocalDate::toEpochDay)).get();
         LocalDate last = (LocalDate) fechas.stream().max(Comparator.comparing(LocalDate::toEpochDay)).get();
-        
-        pickerInicio.setDate(first);        
+
+        pickerInicio.setDate(first);
         pickerFin.setDate(last);
-        
+
         DatePickerSettings settings = pickerInicio.getSettings();
         settings.setDateRangeLimits(first, last);
         settings = pickerFin.getSettings();
         settings.setDateRangeLimits(first, last);
     }
-    
+
     private void btnGenerarReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteVentasActionPerformed
         LocalDate inicio = pickerInicio.getDate();
         LocalDate fin = pickerFin.getDate();
-        ReportarVentas rv = new ReportarVentas(inicio, fin);
-        rv.setVisible(true);
+
+        if (inicio == null || fin == null) {
+            JOptionPane.showMessageDialog(null, "Al menos una fecha está vacía!\nSeleccione una fecha.", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (inicio.isAfter(fin)) {
+            JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser más grande que la de fin", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ReportarVentas rv = new ReportarVentas(inicio, fin);
+            rv.setVisible(true);
+        }
+
     }//GEN-LAST:event_btnGenerarReporteVentasActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnreportartodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreportartodoActionPerformed
         ReportarVentas rv = new ReportarVentas();
         rv.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnreportartodoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +210,7 @@ public class PeriodoFmr extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarReporteVentas;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnreportartodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
