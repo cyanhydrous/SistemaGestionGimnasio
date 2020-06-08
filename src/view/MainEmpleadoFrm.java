@@ -77,6 +77,8 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         objMenuModificarMembresia = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         objMenuRenovarMembresia = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuProductos = new javax.swing.JMenu();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         objMenuRegistroProductos = new javax.swing.JMenuItem();
@@ -234,6 +236,16 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
             }
         });
         jMenu1.add(objMenuRenovarMembresia);
+        jMenu1.add(jSeparator6);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Eliminar Membresia");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -378,19 +390,36 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void objMenuRenovarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRenovarMembresiaActionPerformed
-        solicitaId si = new solicitaId("Renovar", this);
-        si.setVisible(true);
+//        solicitaId si = new solicitaId("Renovar", this);
+//        si.setVisible(true);
+
+        if (tabla.getSelectedRow() != -1) {
+            if (!membs.isMembresiaVigente(tabla.getValueAt(tabla.getSelectedRow(), 0).toString())) {
+                formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("renovar", this);
+                llenarFormulario(modificar, "Renovar");
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "La membresia del cliente todavía está vigente, no se puede renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia a renovar!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_objMenuRenovarMembresiaActionPerformed
 
     private void objMenuRegistrarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuRegistrarMembresiaActionPerformed
         formularioModificarClienteFmr modificar = new formularioModificarClienteFmr("registrar", this);
         modificar.setVisible(true);
-
     }//GEN-LAST:event_objMenuRegistrarMembresiaActionPerformed
 
     private void objMenuModificarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objMenuModificarMembresiaActionPerformed
-        solicitaId si = new solicitaId("Modificar", this);
-        si.setVisible(true);
+//        solicitaId si = new solicitaId("Modificar", this);
+//        si.setVisible(true);
+        if (tabla.getSelectedRow() != -1) {
+            formularioModificarClienteFmr modificar = new formularioModificarClienteFmr(this);
+            modificar.comboTipo.setEnabled(false);
+            llenarFormulario(modificar, "");
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_objMenuModificarMembresiaActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -528,6 +557,14 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuAdmMantsActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (tabla.getSelectedRow() != -1) {
+            eliminarMembresia();
+        } else {
+            JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     private void eliminarMembresia() {
         String id = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
 
@@ -653,6 +690,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -660,6 +698,7 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
