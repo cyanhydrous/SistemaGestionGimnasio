@@ -466,6 +466,13 @@ public class MainEmpleadoFrm extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(new JPanel(), "No ha seleccionado una membresia de un cliente a modificar!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
+                    
+                case KeyEvent.VK_ESCAPE:
+                    int input = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?");
+                    if (input == 0) {
+                        dispose();
+                    }
+                    break;
             }
         }
 
